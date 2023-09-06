@@ -3,19 +3,19 @@ import { useState } from "react";
 import { UserPool } from "./UserPool";
 
 function Signup() {
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    // const attributeList = [];
-    // attributeList.push(
-    //   new CognitoUserAttribute({
-    //     Name: "email",
-    //     Value: email,
-    //   })
-    // );
+    const attributeList = [];
+    attributeList.push(
+      new CognitoUserAttribute({
+        Name: "email",
+        Value: email,
+      })
+    );
     UserPool.signUp(email, password, [], [], (err, data) => {
       if (err) {
         console.log(err);

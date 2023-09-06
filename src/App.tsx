@@ -1,14 +1,15 @@
 import React from "react";
-import { consoleLog } from "./redux/userSlice";
-import { useAppDispatch, useAppSelector } from "./hooks/hooks";
-import Logo from "./icons/Logo";
-import Home from "./icons/Home";
-import Search from "./icons/Search";
-import Explore from "./icons/Explore";
-import Message from "./icons/Message";
-import Likes from "./icons/Likes";
-import Create from "./icons/Create";
-import WrittenLogo from "./icons/WrittenLogo";
+// import { consoleLog } from "./redux/userSlice";
+
+import { useAppSelector } from "./hooks/hooks";
+// import Logo from "./icons/Logo";
+// import Home from "./icons/Home";
+// import Search from "./icons/Search";
+// import Explore from "./icons/Explore";
+// import Message from "./icons/Message";
+// import Likes from "./icons/Likes";
+// import Create from "./icons/Create";
+// import WrittenLogo from "./icons/WrittenLogo";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Status from "./components/Status";
@@ -25,7 +26,7 @@ function App() {
         <Signup />
         <Status />
         <Login />
-        tested again
+        tested again tested for master again
         {/* <Logo />
       <Home />
       <Search />
