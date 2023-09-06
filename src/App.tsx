@@ -25,7 +25,7 @@ function App() {
         <Signup />
         <Status />
         <Login />
-        tested again with new develop branch!!
+        tested again
         {/* <Logo />
       <Home />
       <Search />
