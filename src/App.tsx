@@ -26,7 +26,7 @@ function App() {
         <Signup />
         <Status />
         <Login />
-        tested again tested for master again
+        tested again
         {/* <Logo />
       <Home />
       <Search />
