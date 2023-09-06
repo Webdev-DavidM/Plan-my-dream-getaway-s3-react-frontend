@@ -16,7 +16,7 @@ const Status = () => {
         console.log("Session: ", err);
         setStatus(false);
       });
-  }, [status]);
+  }, [status, getSession]);
 
   console.log(status);
 
