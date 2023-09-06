@@ -2,7 +2,7 @@ name: Upload Website to master
 
 on:
   push:
-    branches: [master]
+    branches: [develop]
 
 jobs:
   Deploy:
