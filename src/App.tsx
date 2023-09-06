@@ -25,7 +25,7 @@ function App() {
         <Signup />
         <Status />
         <Login />
-        test
+        tested for develop
         {/* <Logo />
       <Home />
       <Search />
