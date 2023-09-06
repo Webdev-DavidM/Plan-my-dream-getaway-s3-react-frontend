@@ -2,7 +2,6 @@ import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 import { useState } from "react";
 import { UserPool } from "./UserPool";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 
 function Login() {
   //   const [username, setUsername] = useState("");
