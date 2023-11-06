@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import React from "react";
 
-type Props = {};
+// type Props = {};
 
-export default function Header({}: Props) {
+export default function Header() {
   return (
     <Grid
       container

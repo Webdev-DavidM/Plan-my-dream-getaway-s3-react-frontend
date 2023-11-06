@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 
 const AutoComplete = () => {
   const autoCompleteRef = useRef();
@@ -23,7 +23,7 @@ const AutoComplete = () => {
       const place = await autoCompleteRef?.current.getPlace();
       console.log({ place });
     });
-  }, []);
+  }, [options]);
 
   // useEffect(() => {
   //   if (autoCompleteRef.current) {
