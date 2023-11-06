@@ -12,10 +12,10 @@ import { useAppSelector } from "./hooks/hooks";
 // import WrittenLogo from "./icons/WrittenLogo";
 
 // Components
-import Signup from "./components/Signup";
-import Login from "./components/Login";
-import Status from "./components/Status";
-import { Account } from "./components/Account";
+// import Signup from "./components/Signup";
+// import Login from "./components/Login";
+// import Status from "./components/Status";
+// import { Account } from "./components/Account";
 import Search from "./components/pages/search/Search";
 import { Box } from "@mui/material";
 
