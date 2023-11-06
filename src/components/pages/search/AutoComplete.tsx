@@ -3,10 +3,7 @@ import { useRef, useEffect } from "react";
 const AutoComplete = () => {
   const autoCompleteRef = useRef();
   const inputRef = useRef();
-  const options = {
-    fields: ["name"],
-    types: ["geocode"],
-  };
+
   // Here I can set up the api call to the backend to get the open data
 
   console.log({ autoCompleteRef });
@@ -14,7 +11,10 @@ const AutoComplete = () => {
     // @ts-ignore
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       inputRef.current,
-      options
+      {
+        fields: ["name"],
+        types: ["geocode"],
+      }
     );
 
     // @ts-ignore
@@ -23,7 +23,7 @@ const AutoComplete = () => {
       const place = await autoCompleteRef?.current.getPlace();
       console.log({ place });
     });
-  }, [options]);
+  }, []);
 
   // useEffect(() => {
   //   if (autoCompleteRef.current) {
