@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const AutoComplete = () => {
   const autoCompleteRef = useRef();
@@ -7,6 +7,8 @@ const AutoComplete = () => {
     fields: ["name"],
     types: ["geocode"],
   };
+  // Here I can set up the api call to the backend to get the open data
+
   console.log({ autoCompleteRef });
   useEffect(() => {
     // @ts-ignore

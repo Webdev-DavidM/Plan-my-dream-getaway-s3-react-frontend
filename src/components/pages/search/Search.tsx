@@ -1,5 +1,3 @@
-import { Grid } from "@mui/material";
-
 // Components
 import Header from "./Header";
 import BottomNavBar from "./BottomNavBar";
