@@ -23,7 +23,7 @@ const AutoComplete = () => {
       const place = await autoCompleteRef?.current.getPlace();
       console.log({ place });
     });
-  }, []);
+  }, [options]);
 
   // useEffect(() => {
   //   if (autoCompleteRef.current) {
