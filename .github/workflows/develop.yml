@@ -9,10 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-        CI: false  # Set process.env.CI to false
+      CI: false
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Set CI environment variable to false
+        run: echo "export CI=false" >> $GITHUB_ENV
 
       - name: Setup node
         uses: actions/setup-node@v2
