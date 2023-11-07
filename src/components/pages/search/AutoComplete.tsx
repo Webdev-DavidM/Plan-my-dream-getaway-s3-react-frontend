@@ -3,41 +3,32 @@ import { useRef, useEffect } from "react";
 const AutoComplete = () => {
   const autoCompleteRef = useRef();
   const inputRef = useRef();
-  const options = {
-    fields: ["name"],
-    types: ["geocode"],
-  };
+
   // Here I can set up the api call to the backend to get the open data
 
-  console.log({ autoCompleteRef });
   useEffect(() => {
     // @ts-ignore
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       inputRef.current,
-      options
+      {
+        fields: ["name"],
+        types: ["geocode"],
+      }
     );
 
+    // This case below returns the place selected by the user so I can use this query my backend
+    // for the open ai
     // @ts-ignore
     autoCompleteRef.current.addListener("place_changed", async function () {
       // @ts-ignore
       const place = await autoCompleteRef?.current.getPlace();
-      console.log({ place });
+      console.log("place", place);
     });
-  }, [options]);
-
-  // useEffect(() => {
-  //   if (autoCompleteRef.current) {
-  //     // @ts-ignore
-  //     autoCompleteRef.current.addListener("place_changed", async function () {
-  //       const place = await autoCompleteRef?.current.getPlace();
-  //       console.log({ place });
-  //     });
-  //   }
-  // }, [autoCompleteRef.current]);
+  }, []);
 
   return (
     <div>
-      <label>enter address :</label>
+      <label>enter address : now</label>
       <input ref={inputRef} />
     </div>
   );
