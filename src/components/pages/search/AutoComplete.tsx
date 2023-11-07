@@ -6,7 +6,6 @@ const AutoComplete = () => {
 
   // Here I can set up the api call to the backend to get the open data
 
-  console.log({ autoCompleteRef });
   useEffect(() => {
     // @ts-ignore
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
@@ -29,7 +28,7 @@ const AutoComplete = () => {
 
   return (
     <div>
-      <label>enter address :</label>
+      <label>enter address : now</label>
       <input ref={inputRef} />
     </div>
   );
