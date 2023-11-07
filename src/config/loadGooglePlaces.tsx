@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const loadGooglePlaces = async (callback) => {
+const loadGooglePlaces = async (key, callback) => {
   const existingScript = document.getElementById("googleMaps");
   if (!existingScript) {
     const script = document.createElement("script");
