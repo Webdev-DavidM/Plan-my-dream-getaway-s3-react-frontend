@@ -2,7 +2,7 @@ const loadGooglePlaces = async (key, callback) => {
   const existingScript = document.getElementById("googleMaps");
   if (!existingScript) {
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCBsdxQvERIzbM2CuT_0ZKJOBaBLaY6i8s&libraries=places`;
 
     script.id = "googleMaps";
     document.body.appendChild(script);
