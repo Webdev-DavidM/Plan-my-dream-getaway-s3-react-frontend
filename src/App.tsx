@@ -32,6 +32,7 @@ function App() {
         backgroundColor: "#fafafa",
       }}
     >
+      <p>hello</p>
       <Search />
       {/* <Account> */}
       {/* <Signup />
