@@ -11,13 +11,13 @@ import { useEffect, useState } from "react";
 type Props = {};
 
 const TripDetails = (props: Props) => {
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    loadGooglePlaces(() => {
-      return setLoaded(true);
-    });
-  }, []);
+  // useEffect(() => {
+  //   loadGooglePlaces(() => {
+  //     return setLoaded(true);
+  //   });
+  // }, []);
 
   return (
     <Grid
@@ -29,7 +29,8 @@ const TripDetails = (props: Props) => {
         // backgroundColor: "blue",
       }}
     >
-      {loaded && <AutoComplete />}
+      {/* {loaded && <AutoComplete />} */}
+      <AutoComplete />
     </Grid>
   );
 };
