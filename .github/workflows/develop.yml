@@ -1,4 +1,4 @@
-name: Upload Website to master
+name: Upload Website to develop
 
 on:
   push:
