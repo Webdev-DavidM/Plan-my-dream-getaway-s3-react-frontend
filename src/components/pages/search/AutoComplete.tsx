@@ -17,6 +17,8 @@ const AutoComplete = () => {
       }
     );
 
+    // This case below returns the place selected by the user so I can use this query my backend
+    // for the open ai
     // @ts-ignore
     autoCompleteRef.current.addListener("place_changed", async function () {
       // @ts-ignore
@@ -24,16 +26,6 @@ const AutoComplete = () => {
       console.log({ place });
     });
   }, []);
-
-  // useEffect(() => {
-  //   if (autoCompleteRef.current) {
-  //     // @ts-ignore
-  //     autoCompleteRef.current.addListener("place_changed", async function () {
-  //       const place = await autoCompleteRef?.current.getPlace();
-  //       console.log({ place });
-  //     });
-  //   }
-  // }, [autoCompleteRef.current]);
 
   return (
     <div>
