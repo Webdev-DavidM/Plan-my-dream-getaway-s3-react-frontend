@@ -2,11 +2,9 @@
 import { Grid } from "@mui/material";
 
 // Script
-import loadGooglePlaces from "../../../config/loadGooglePlaces";
 
 // Components
 import AutoComplete from "./AutoComplete";
-import { useEffect, useState } from "react";
 
 type Props = {};
 
