@@ -1,4 +1,4 @@
-const loadGooglePlaces = async (key, callback) => {
+const loadGooglePlaces = async (callback) => {
   const existingScript = document.getElementById("googleMaps");
   if (!existingScript) {
     const script = document.createElement("script");
