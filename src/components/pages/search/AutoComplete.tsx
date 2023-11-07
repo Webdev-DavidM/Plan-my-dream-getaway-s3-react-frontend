@@ -23,7 +23,7 @@ const AutoComplete = () => {
     autoCompleteRef.current.addListener("place_changed", async function () {
       // @ts-ignore
       const place = await autoCompleteRef?.current.getPlace();
-      console.log({ place });
+      console.log("place", place);
     });
   }, []);
 
