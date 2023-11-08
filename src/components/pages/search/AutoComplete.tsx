@@ -1,35 +1,49 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const AutoComplete = () => {
-  const autoCompleteRef = useRef();
-  const inputRef = useRef();
+  const [value, setValue] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState("");
+  const options = ["Option 1", "Option 2"];
 
-  // Here I can set up the api call to the backend to get the open data
-
-  useEffect(() => {
-    // @ts-ignore
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-      inputRef.current,
+  const acService = new google.maps.places.AutocompleteService();
+  const predictions = () => {
+    acService.getPlacePredictions(
       {
-        fields: ["name"],
+        input: inputValue,
         types: ["geocode"],
+      },
+      function (predictions, status) {
+        console.log(predictions);
+        console.log(status);
       }
     );
+  };
 
-    // This case below returns the place selected by the user so I can use this query my backend
-    // for the open ai
-    // @ts-ignore
-    autoCompleteRef.current.addListener("place_changed", async function () {
-      // @ts-ignore
-      const place = await autoCompleteRef?.current.getPlace();
-      console.log("place", place);
-    });
-  }, []);
+  useEffect(() => {
+    predictions();
+  }, [inputValue]);
 
   return (
     <div>
-      <label>enter address : now</label>
-      <input ref={inputRef} />
+      <div>{`value: ${value !== null ? `'${value}'` : "null"}`}</div>
+      <div>{`inputValue: '${inputValue}'`}</div>
+      <br />
+      <Autocomplete
+        value={value}
+        onChange={(event: any, newValue: string | null) => {
+          setValue(newValue);
+        }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        id="controllable-states-demo"
+        options={options}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Controllable" />}
+      />
     </div>
   );
 };
