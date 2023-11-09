@@ -17,6 +17,7 @@ const BottomNavBar = (props: Props) => {
         padding: "1rem ",
         justifyContent: "space-between",
         alignItems: "center",
+        marginTop: "auto",
       }}
       gap={1}
     >

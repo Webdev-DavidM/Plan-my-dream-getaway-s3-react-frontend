@@ -130,10 +130,16 @@ export default function GoogleMaps() {
       noOptionsText="No where selected"
       onChange={(event: any, newValue: PlaceType | null) => {
         setOptions(newValue ? [newValue, ...options] : options);
+
         setValue(newValue);
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
+      }}
+      onKeyDown={(event: any) => {
+        if (event.key === "Enter") {
+          setValue(options[0]);
+        }
       }}
       renderInput={(params) => (
         <TextField {...params} label="Where would you like to go?" fullWidth />

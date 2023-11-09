@@ -30,8 +30,9 @@ function App() {
       sx={{
         width: "100vw",
         height: "100vh",
+
         backgroundColor: "#fafafa",
-        justifyContent: "space-between",
+        // justifyContent: "space-between",
       }}
     >
       <Search />

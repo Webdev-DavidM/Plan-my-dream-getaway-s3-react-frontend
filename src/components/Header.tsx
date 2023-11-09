@@ -11,7 +11,6 @@ export default function Header() {
         width: "100vw",
         alignItems: "center",
         justifyContent: "center",
-        borderBottom: "1px solid #dbdbdb",
       }}
     >
       <Typography
