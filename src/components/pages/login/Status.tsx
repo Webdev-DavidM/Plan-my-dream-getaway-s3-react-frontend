@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { AccountContext } from "./pages/login/Account";
+import { AccountContext } from "./Account";
 
 const Status = () => {
   const [status, setStatus] = useState(false);

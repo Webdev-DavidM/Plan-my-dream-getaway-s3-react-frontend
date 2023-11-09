@@ -1,18 +1,21 @@
 // Components
 import { Grid } from "@mui/material";
 import Header from "../../Header";
-import BottomNavBar from "./BottomNavBar";
+import BottomNavBar from "../../Footer";
 import SelectPlace from "./SelectPlace";
+
+import ProgressBar from "./ProgressBar";
 
 type Props = {};
 
 const Search = (props: Props) => {
   return (
-    <Grid container>
+    <>
       <Header />
+      <ProgressBar />
       <SelectPlace />
       <BottomNavBar />
-    </Grid>
+    </>
   );
 };
 

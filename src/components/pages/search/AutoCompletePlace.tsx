@@ -8,8 +8,7 @@ import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import { debounce } from "@mui/material/utils";
 
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
+// This key is whitelisted on the Google Maps API for only certain domains
 const GOOGLE_MAPS_API_KEY = "AIzaSyCBsdxQvERIzbM2CuT_0ZKJOBaBLaY6i8s";
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
@@ -118,7 +117,7 @@ export default function GoogleMaps() {
   return (
     <Autocomplete
       id="google-map-demo"
-      sx={{ width: 300 }}
+      sx={{ width: "30vw", borderRadius: 25 }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
       }
@@ -128,7 +127,7 @@ export default function GoogleMaps() {
       includeInputInList
       filterSelectedOptions
       value={value}
-      noOptionsText="No locations"
+      noOptionsText="No where selected"
       onChange={(event: any, newValue: PlaceType | null) => {
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
@@ -137,7 +136,7 @@ export default function GoogleMaps() {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Add a location" fullWidth />
+        <TextField {...params} label="Where would you like to go?" fullWidth />
       )}
       renderOption={(props, option) => {
         const matches =
@@ -154,26 +153,18 @@ export default function GoogleMaps() {
         return (
           <li {...props}>
             <Grid container alignItems="center">
-              <Grid item sx={{ display: "flex", width: 44 }}>
-                {/* <LocationOnIcon sx={{ color: "text.secondary" }} /> */}
-              </Grid>
-              <Grid
-                item
-                sx={{ width: "calc(100% - 44px)", wordWrap: "break-word" }}
-              >
-                {parts.map((part, index) => (
-                  <Box
-                    key={index}
-                    component="span"
-                    sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
-                  >
-                    {part.text}
-                  </Box>
-                ))}
-                <Typography variant="body2" color="text.secondary">
-                  {option.structured_formatting.secondary_text}
-                </Typography>
-              </Grid>
+              {parts.map((part, index) => (
+                <Box
+                  key={index}
+                  component="span"
+                  sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
+                >
+                  {part.text}
+                </Box>
+              ))}
+              <Typography variant="body2" color="text.secondary">
+                {option.structured_formatting.secondary_text}
+              </Typography>
             </Grid>
           </li>
         );

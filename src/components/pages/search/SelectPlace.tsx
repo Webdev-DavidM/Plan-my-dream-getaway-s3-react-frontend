@@ -1,7 +1,5 @@
 import { Grid } from "@mui/material";
-import Header from "../../Header";
 import AutoCompletePlace from "./AutoCompletePlace";
-import BottomNavBar from "./BottomNavBar";
 
 type Props = {};
 
@@ -11,9 +9,10 @@ function SelectPlace({}: Props) {
       container
       xs={12}
       sx={{
-        height: "80vh",
-        width: "100vw",
-        // backgroundColor: "blue",
+        height: "75vh",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <AutoCompletePlace />
