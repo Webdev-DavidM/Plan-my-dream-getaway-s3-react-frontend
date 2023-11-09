@@ -1,17 +1,18 @@
 // Components
-import Header from "./Header";
+import { Grid } from "@mui/material";
+import Header from "../../Header";
 import BottomNavBar from "./BottomNavBar";
-import TripDetails from "./TripDetails";
+import SelectPlace from "./SelectPlace";
 
 type Props = {};
 
 const Search = (props: Props) => {
   return (
-    <>
+    <Grid container>
       <Header />
-      <TripDetails />
+      <SelectPlace />
       <BottomNavBar />
-    </>
+    </Grid>
   );
 };
 
