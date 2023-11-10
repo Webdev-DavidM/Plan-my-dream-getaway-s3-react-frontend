@@ -17,28 +17,26 @@ import { useAppSelector } from "./hooks/hooks";
 // import Status from "./components/Status";
 // import { Account } from "./components/Account";
 import Search from "./components/pages/search/Search";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 function App() {
-  let name = useAppSelector((state) => state.user.name);
-  console.log(name);
+  // let name = useAppSelector((state) => state.user.name);
+  // console.log(name);
   //tested again with new develop branch!!
   // const dispatch = useAppDispatch();
   return (
-    <Box
+    <Grid
+      container
       sx={{
         width: "100vw",
         height: "100vh",
+
         backgroundColor: "#fafafa",
+        // justifyContent: "space-between",
       }}
     >
-      <p>hello</p>
       <Search />
-      {/* <Account> */}
-      {/* <Signup />
-        <Status />
-        <Login />
-        tested again */}
+
       {/* <Logo />
       <Home />
       <Search />
@@ -52,7 +50,7 @@ function App() {
         developed now updated to test again and again
       </button> */}
       {/* </Account> */}
-    </Box>
+    </Grid>
   );
 }
 
