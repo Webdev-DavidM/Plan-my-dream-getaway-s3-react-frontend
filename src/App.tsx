@@ -1,7 +1,5 @@
-import React from "react";
 // import { consoleLog } from "./redux/userSlice";
 
-import { useAppSelector } from "./hooks/hooks";
 // import Logo from "./icons/Logo";
 // import Home from "./icons/Home";
 // import Search from "./icons/Search";
@@ -17,7 +15,7 @@ import { useAppSelector } from "./hooks/hooks";
 // import Status from "./components/Status";
 // import { Account } from "./components/Account";
 import Search from "./components/pages/search/Search";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 function App() {
   // let name = useAppSelector((state) => state.user.name);
