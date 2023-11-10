@@ -5,7 +5,8 @@ type InitialState = {
   place: string;
   interests: string[] | [];
   travellingWith: string[] | [];
-  searchStep: number;
+  searchStep: number | undefined;
+  numberOfSteps: number;
 };
 
 export const tripDetailsSlice = createSlice({
@@ -14,18 +15,15 @@ export const tripDetailsSlice = createSlice({
     place: "",
     interests: [],
     travellingWith: [],
-    searchStep: 0,
+    searchStep: 1,
+    numberOfSteps: 4,
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
-      if (payload < 0) {
-        state.searchStep = 0;
+      if (payload < 1 || payload > state.numberOfSteps) {
         return;
       }
-      if (payload > 2) {
-        state.searchStep = 2;
-        return;
-      }
+
       state.searchStep = payload;
     },
   },

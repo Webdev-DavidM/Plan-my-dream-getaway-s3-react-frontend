@@ -1,12 +1,18 @@
 import * as React from "react";
+import parse from "autosuggest-highlight/parse";
+import { debounce } from "@mui/material/utils";
+
+//Mui
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import parse from "autosuggest-highlight/parse";
-import { debounce } from "@mui/material/utils";
+// import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+// Redux
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { setSearchStep } from "../../../redux/userSlice";
 
 // This key is whitelisted on the Google Maps API for only certain domains
 const GOOGLE_MAPS_API_KEY = "AIzaSyCBsdxQvERIzbM2CuT_0ZKJOBaBLaY6i8s";
@@ -42,10 +48,10 @@ interface PlaceType {
 export default function GoogleMaps() {
   const [value, setValue] = React.useState<PlaceType | null>(null);
   const [inputValue, setInputValue] = React.useState("");
+  const dispatch = useAppDispatch();
   const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
   const loaded = React.useRef(false);
-
-  console.log(value);
+  let step = useAppSelector((state) => state.user.searchStep);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-maps")) {
@@ -130,16 +136,11 @@ export default function GoogleMaps() {
       noOptionsText="No where selected"
       onChange={(event: any, newValue: PlaceType | null) => {
         setOptions(newValue ? [newValue, ...options] : options);
-
         setValue(newValue);
+        dispatch(setSearchStep(step + 1));
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
-      }}
-      onKeyDown={(event: any) => {
-        if (event.key === "Enter") {
-          setValue(options[0]);
-        }
       }}
       renderInput={(params) => (
         <TextField {...params} label="Where would you like to go?" fullWidth />

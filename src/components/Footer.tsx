@@ -7,7 +7,7 @@ type Props = {};
 const BottomNavBar = (props: Props) => {
   let step = useAppSelector((state) => state.user.searchStep);
   const dispatch = useAppDispatch();
-  console.log(step);
+
   return (
     <Grid
       container
@@ -23,6 +23,8 @@ const BottomNavBar = (props: Props) => {
     >
       <Button
         variant="contained"
+        disabled={step === 1}
+        data-cy="previous"
         sx={{
           maxHeight: "2.5rem",
         }}
@@ -30,16 +32,29 @@ const BottomNavBar = (props: Props) => {
       >
         Previous
       </Button>
-      <Button
-        sx={{
-          maxHeight: "2.5rem",
-        }}
-        variant="contained"
-        onClick={() => dispatch(setSearchStep(step + 1))}
-      >
-        Next
-      </Button>
-      {/* <Button variant="contained">Save trip</Button> */}
+      {step < 4 && (
+        <Button
+          data-cy="next"
+          sx={{
+            maxHeight: "2.5rem",
+          }}
+          variant="contained"
+          onClick={() => dispatch(setSearchStep(step + 1))}
+        >
+          Next
+        </Button>
+      )}
+      {step === 4 && (
+        <Button
+          data-cy="save"
+          sx={{
+            maxHeight: "2.5rem",
+          }}
+          variant="contained"
+        >
+          Save
+        </Button>
+      )}
     </Grid>
   );
 };
