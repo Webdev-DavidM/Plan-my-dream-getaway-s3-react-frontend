@@ -29,7 +29,9 @@ function App() {
         width: "100vw",
         height: "100vh",
 
-        backgroundColor: "#fafafa",
+        position: "relative",
+
+        backgroundColor: "white",
         // justifyContent: "space-between",
       }}
     >

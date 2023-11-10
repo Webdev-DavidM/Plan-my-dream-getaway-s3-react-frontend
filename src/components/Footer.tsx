@@ -14,10 +14,14 @@ const BottomNavBar = (props: Props) => {
       sx={{
         height: "10vh",
         width: "100%",
-        padding: "1rem ",
+        padding: "1rem",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: "auto",
+        position: "fixed",
+        bottom: "0",
+        left: "0",
+        backgroundColor: "white",
+        right: "0",
       }}
       gap={1}
     >

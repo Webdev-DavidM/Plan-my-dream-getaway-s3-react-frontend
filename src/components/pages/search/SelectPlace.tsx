@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import AutoCompletePlace from "./AutoCompletePlace";
+import PopularDestinations from "./PopularDestinations";
 
 function SelectPlace() {
   return (
@@ -8,12 +9,15 @@ function SelectPlace() {
       xs={12}
       sx={{
         height: "75vh",
-        width: "100%",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "column",
+        width: "100%",
+        backgroundColor: "white",
       }}
     >
       <AutoCompletePlace />
+      <PopularDestinations />
     </Grid>
   );
 }
