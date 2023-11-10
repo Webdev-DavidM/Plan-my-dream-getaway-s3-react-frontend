@@ -1,9 +1,7 @@
 import { Grid } from "@mui/material";
 import AutoCompletePlace from "./AutoCompletePlace";
 
-type Props = {};
-
-function SelectPlace({}: Props) {
+function SelectPlace() {
   return (
     <Grid
       container
