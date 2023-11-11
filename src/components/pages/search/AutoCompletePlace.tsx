@@ -121,61 +121,77 @@ export default function GoogleMaps() {
   }, [value, inputValue, fetch]);
 
   return (
-    <Autocomplete
-      id="google-map-demo"
-      sx={{ width: "30vw", borderRadius: 25 }}
-      getOptionLabel={(option) =>
-        typeof option === "string" ? option : option.description
-      }
-      filterOptions={(x) => x}
-      options={options}
-      autoComplete
-      includeInputInList
-      filterSelectedOptions
-      value={value}
-      noOptionsText="No where selected"
-      onChange={(event: any, newValue: PlaceType | null) => {
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-        dispatch(setSearchStep(step + 1));
+    <Grid
+      item
+      xs={12}
+      p={2}
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        border: "1px solid red",
       }}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
-      renderInput={(params) => (
-        <TextField {...params} label="Where would you like to go?" fullWidth />
-      )}
-      renderOption={(props, option) => {
-        const matches =
-          option.structured_formatting.main_text_matched_substrings || [];
+    >
+      <Autocomplete
+        id="google-map-demo"
+        // sx={{ width: "30vw", borderRadius: 25 }}
 
-        const parts = parse(
-          option.structured_formatting.main_text,
-          matches.map((match: any) => [
-            match.offset,
-            match.offset + match.length,
-          ])
-        );
+        getOptionLabel={(option) =>
+          typeof option === "string" ? option : option.description
+        }
+        filterOptions={(x) => x}
+        options={options}
+        autoComplete
+        includeInputInList
+        filterSelectedOptions
+        value={value}
+        noOptionsText="No where selected"
+        onChange={(event: any, newValue: PlaceType | null) => {
+          setOptions(newValue ? [newValue, ...options] : options);
+          setValue(newValue);
+          dispatch(setSearchStep(step + 1));
+        }}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Where would you like to go?"
+            fullWidth
+          />
+        )}
+        renderOption={(props, option) => {
+          const matches =
+            option.structured_formatting.main_text_matched_substrings || [];
 
-        return (
-          <li {...props}>
-            <Grid container alignItems="center">
-              {parts.map((part, index) => (
-                <Box
-                  key={index}
-                  component="span"
-                  sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
-                >
-                  {part.text}
-                </Box>
-              ))}
-              <Typography variant="body2" color="text.secondary">
-                {option.structured_formatting.secondary_text}
-              </Typography>
-            </Grid>
-          </li>
-        );
-      }}
-    />
+          const parts = parse(
+            option.structured_formatting.main_text,
+            matches.map((match: any) => [
+              match.offset,
+              match.offset + match.length,
+            ])
+          );
+
+          return (
+            <li {...props}>
+              <Grid container alignItems="center">
+                {parts.map((part, index) => (
+                  <Box
+                    key={index}
+                    component="span"
+                    sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
+                  >
+                    {part.text}
+                  </Box>
+                ))}
+                <Typography variant="body2" color="text.secondary">
+                  {option.structured_formatting.secondary_text}
+                </Typography>
+              </Grid>
+            </li>
+          );
+        }}
+      />
+    </Grid>
   );
 }
