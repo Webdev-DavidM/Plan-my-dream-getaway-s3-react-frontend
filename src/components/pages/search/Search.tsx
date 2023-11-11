@@ -1,14 +1,10 @@
 // Components
-import Header from "../../Header";
-import BottomNavBar from "../../Footer";
 import SelectPlace from "./SelectPlace";
-import ProgressBar from "./ProgressBar";
 
 // Redux
 import { useAppSelector } from "../../../hooks/hooks";
 import Selectinterests from "./Selectinterests";
 import SelectTravellers from "./SelectTravellers";
-import { Grid } from "@mui/material";
 
 type Props = {};
 
