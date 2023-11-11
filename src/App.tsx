@@ -14,6 +14,9 @@
 // import Login from "./components/Login";
 // import Status from "./components/Status";
 // import { Account } from "./components/Account";
+import BottomNavBar from "./components/Footer";
+import Header from "./components/Header";
+import ProgressBar from "./components/pages/search/ProgressBar";
 import Search from "./components/pages/search/Search";
 import { Grid } from "@mui/material";
 
@@ -35,7 +38,10 @@ function App() {
         // justifyContent: "space-between",
       }}
     >
+      <Header />
+      <ProgressBar />
       <Search />
+      <BottomNavBar />
 
       {/* <Logo />
       <Home />

@@ -10,7 +10,7 @@ const PopularDestinations = (props: Props) => {
       container
       mt={5}
       sx={{
-        width: "50%",
+        // width: "50%",
 
         justifyContent: "center",
         alignItems: "center",

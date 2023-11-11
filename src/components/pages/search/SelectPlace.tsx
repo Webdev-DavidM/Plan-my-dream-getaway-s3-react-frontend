@@ -8,12 +8,14 @@ function SelectPlace() {
       container
       xs={12}
       sx={{
-        height: "75vh",
+        // minHeight: "100vh",
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: "column",
-        width: "100%",
+        // flexDirection: "column",
+        // width: "100%",
         backgroundColor: "white",
+        border: "1px solid red",
+        marginTop: "20vh",
       }}
     >
       <AutoCompletePlace />
