@@ -24,17 +24,18 @@ export default function Header() {
       }}
     >
       <Typography
-        variant="h5"
+        variant="h3"
         color="primary"
         sx={{
           width: "100%",
           textAlign: "center",
+          mt: 3,
         }}
       >
         Plan your dream getaway
       </Typography>
       <Typography
-        variant="h6"
+        variant="body1"
         sx={{
           width: "100%",
           textAlign: "center",

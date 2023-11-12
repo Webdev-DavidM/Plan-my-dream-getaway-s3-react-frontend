@@ -13,9 +13,10 @@ const PopularDestinations = (props: Props) => {
         sx={{
           width: "100%",
         }}
-        mb={2}
+        mt={3}
         variant="h4"
         color="primary"
+        px={1}
       >
         Popular Destinations
       </Typography>
@@ -25,7 +26,7 @@ const PopularDestinations = (props: Props) => {
         sx={{
           width: "100%",
 
-          alignItems: "center",
+          // alignItems: "center",
         }}
       >
         <DestinationImage place={"Cancun"} imageName={"cancun"} />
