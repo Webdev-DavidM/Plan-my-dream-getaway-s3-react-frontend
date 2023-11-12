@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface IPropsDestinationImage {
@@ -13,14 +13,17 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
   return (
     <Grid
       item
+      xs={6}
+      md={4}
+      lg={2}
       sx={{
-        width: "180px",
-        height: "180px",
+        // width: "180px",
+        // height: "180px",
         justifyContent: "space-between",
-        mt: 1,
-        borderRadius: "10px",
+        position: "relative",
         overflow: "hidden",
-        p: 1,
+
+        // p: 3,
       }}
     >
       {/* <Grid
@@ -35,9 +38,22 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
         style={{
           height: "100%",
           width: "100%",
-          // objectFit: "fill",
+          objectFit: "fill",
         }}
       />
+
+      <Typography
+        sx={{
+          position: "absolute",
+          color: "white",
+          bottom: 0,
+          left: 0,
+          p: 1,
+        }}
+        variant="h5"
+      >
+        {place}
+      </Typography>
     </Grid>
     // </Grid>
   );

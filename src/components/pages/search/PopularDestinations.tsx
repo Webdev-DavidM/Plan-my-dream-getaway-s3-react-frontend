@@ -1,36 +1,30 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import DestinationImage from "./DestinationImage";
 
 type Props = {};
 
 const PopularDestinations = (props: Props) => {
+  const theme = useTheme();
+  console.log(theme);
   return (
-    <Grid
-      container
-      mt={5}
-      sx={{
-        // width: "50%",
-
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Grid container xs={12} lg={8}>
       <Typography
         sx={{
           width: "100%",
         }}
+        mb={2}
+        variant="h4"
+        color="primary"
       >
-        PopularDestinations
+        Popular Destinations
       </Typography>
       <Grid
         container
         xs={12}
-        py={2}
         sx={{
           width: "100%",
-          border: "1px solid red",
-          justifyContent: "space-between",
+
           alignItems: "center",
         }}
       >
@@ -38,11 +32,8 @@ const PopularDestinations = (props: Props) => {
         <DestinationImage place={"Dubai"} imageName={"dubai"} />
         <DestinationImage place={"Istanbul"} imageName={"istanbul"} />
         <DestinationImage place={"LasVegas"} imageName={"lasvegas"} />
-        <DestinationImage place={"Miami"} imageName={"miami"} />
-        <DestinationImage
-          place={"Sharm-El-Sheikh"}
-          imageName={"sharm-el-sheikh"}
-        />
+        <DestinationImage place={"Honolulu"} imageName={"honolulu"} />
+        <DestinationImage place={"Cabo San Lucas"} imageName={"cabosanlucas"} />
       </Grid>
     </Grid>
   );
