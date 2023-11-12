@@ -4,7 +4,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 export default function ProgressBar() {
   return (
-    <Box sx={{ width: "80%", margin: "auto" }}>
+    <Box sx={{ width: "80%", margin: "auto", mt: 3 }}>
       <LinearProgress variant="determinate" value={25} />
     </Box>
   );

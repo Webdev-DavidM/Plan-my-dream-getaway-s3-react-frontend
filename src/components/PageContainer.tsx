@@ -7,18 +7,19 @@ type Props = {
 
 function PageContainer({ children }: Props) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  console.log(isMobile);
+  const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <Grid
       container
       xs={12}
       sx={{
-        minHeight: "100vh",
+        minHeight: notLarge ? "110vh" : "100vh",
         justifyContent: "center",
-        alignItems: isMobile ? "normal" : "center",
-        mt: isMobile ? 10 : 0,
+        alignItems: "center",
+        mt: notLarge ? 10 : 0,
+        mb: notLarge ? 10 : 0,
+
         width: "100%",
         backgroundColor: "white",
       }}

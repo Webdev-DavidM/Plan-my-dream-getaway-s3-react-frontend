@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface IPropsDestinationImage {
@@ -10,6 +10,8 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
   place,
   imageName,
 }) => {
+  const theme = useTheme();
+  const largeDesktop = useMediaQuery(theme.breakpoints.up("lg"));
   return (
     <Grid
       item
@@ -17,11 +19,13 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
       md={4}
       lg={2}
       sx={{
-        // width: "180px",
-        // height: "180px",
+        maxWidth: largeDesktop ? "180px" : "100%",
+        // maxHeight: largeDesktop ? "180px" : "100%",
         justifyContent: "space-between",
         position: "relative",
         overflow: "hidden",
+        borderRadius: 2,
+        p: 1,
 
         // p: 3,
       }}
@@ -38,7 +42,7 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
         style={{
           height: "100%",
           width: "100%",
-          objectFit: "fill",
+          objectFit: "cover",
         }}
       />
 
@@ -48,7 +52,7 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
           color: "white",
           bottom: 0,
           left: 0,
-          p: 1,
+          p: 2,
         }}
         variant="h5"
       >
