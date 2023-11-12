@@ -4,20 +4,7 @@ import PopularDestinations from "./PopularDestinations";
 
 function SelectPlace() {
   return (
-    <Grid
-      container
-      xs={12}
-      sx={{
-        // minHeight: "100vh",
-        justifyContent: "center",
-        alignItems: "center",
-        // flexDirection: "column",
-        // width: "100%",
-        backgroundColor: "white",
-        border: "1px solid red",
-        marginTop: "20vh",
-      }}
-    >
+    <Grid container justifyContent={"center"}>
       <AutoCompletePlace />
       <PopularDestinations />
     </Grid>

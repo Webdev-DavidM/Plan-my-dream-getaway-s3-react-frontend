@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material";
+import ProgressBar from "./pages/search/ProgressBar";
 
 // type Props = {};
 
@@ -7,28 +8,43 @@ export default function Header() {
     <Grid
       container
       sx={{
-        minHeight: "10vh",
+        // minHeight: "10vh",
         position: "fixed",
         top: "0",
         left: "0",
         backgroundColor: "white",
         right: "0",
-        width: "100%",
+        maxWidth: "100%",
         alignItems: "center",
         justifyContent: "center",
         zIndex: 100,
-        p: 3,
+        overflowY: "hidden" /* Hide vertical scrollbar */,
+        overflowX: "hidden" /* Hide horizontal scrollbar */,
+        // p: 3,
       }}
     >
       <Typography
-        variant="h4"
+        variant="h5"
+        color="primary"
         sx={{
-          fontWeight: "bold",
-          color: "#8e8e8e",
+          width: "100%",
+          textAlign: "center",
         }}
       >
-        Plan my dream getaway
+        Plan your dream getaway
       </Typography>
+      <Typography
+        variant="h6"
+        sx={{
+          width: "100%",
+          textAlign: "center",
+          mb: 1,
+        }}
+      >
+        {" "}
+        Powered by AI
+      </Typography>
+      <ProgressBar />
     </Grid>
   );
 }

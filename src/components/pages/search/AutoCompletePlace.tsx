@@ -121,16 +121,7 @@ export default function GoogleMaps() {
   }, [value, inputValue, fetch]);
 
   return (
-    <Grid
-      item
-      xs={12}
-      p={2}
-      sx={{
-        justifyContent: "center",
-        alignItems: "center",
-        border: "1px solid red",
-      }}
-    >
+    <Grid item xs={12} md={8} py={2}>
       <Autocomplete
         id="google-map-demo"
         // sx={{ width: "30vw", borderRadius: 25 }}
@@ -184,7 +175,7 @@ export default function GoogleMaps() {
                     {part.text}
                   </Box>
                 ))}
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="primary">
                   {option.structured_formatting.secondary_text}
                 </Typography>
               </Grid>
