@@ -21,7 +21,6 @@ function loadScript(src: string, position: HTMLElement | null, id: string) {
   if (!position) {
     return;
   }
-
   const script = document.createElement("script");
   script.setAttribute("async", "");
   script.setAttribute("id", id);
@@ -124,6 +123,7 @@ export default function GoogleMaps() {
     <Grid item xs={12} md={6} py={2}>
       <Autocomplete
         id="google-map-demo"
+        data-cy="autocomplete-field"
         // sx={{ width: "30vw", borderRadius: 25 }}
 
         getOptionLabel={(option) =>
@@ -170,6 +170,7 @@ export default function GoogleMaps() {
                   <Box
                     key={index}
                     component="span"
+                    data-cy="autocomplete-place"
                     sx={{
                       fontWeight: part.highlight ? "bold" : "regular",
                       // color: "primary.main",

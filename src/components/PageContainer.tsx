@@ -17,9 +17,6 @@ function PageContainer({ children }: Props) {
         minHeight: notLarge ? "110vh" : "100vh",
         justifyContent: "center",
         alignItems: "center",
-        mt: notLarge ? 10 : 0,
-        mb: notLarge ? 10 : 0,
-
         width: "100%",
         backgroundColor: "white",
       }}
