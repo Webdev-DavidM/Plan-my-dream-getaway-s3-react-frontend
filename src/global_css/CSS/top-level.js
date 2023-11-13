@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
+import { css } from "styled-components";
 // eslint-disable-next-line
-import { color, fonts, fontWeights } from '../Variables';
+import { color, fonts, fontWeights } from "../Variables";
 
 export const TopLevel = css`
   html {
@@ -19,7 +19,7 @@ export const TopLevel = css`
   body {
     display: flex;
     flex-direction: column;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-size: 18px;
     color: ${color.lightestSlate};

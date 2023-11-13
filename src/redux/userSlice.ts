@@ -1,25 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface name {
-  name: string;
-}
+type InitialState = {
+  place: string;
+  interests: string[] | [];
+  travellingWith: string[] | [];
+  searchStep: number | undefined;
+  numberOfSteps: number;
+};
 
-export const userSlice = createSlice({
-  name: "user",
+export const tripDetailsSlice = createSlice({
+  name: "tripDetails",
   initialState: {
-    name: "Jeff",
-    post: "Hello there",
-  },
+    place: "",
+    interests: [],
+    travellingWith: [],
+    searchStep: 1,
+    numberOfSteps: 4,
+  } as InitialState,
   reducers: {
-    consoleLog: (state, { payload }: PayloadAction<name>) => {
-      console.log(state.post);
-      console.log(payload.name);
+    setSearchStep: (state, { payload }: PayloadAction<number>) => {
+      if (payload < 1 || payload > state.numberOfSteps) {
+        return;
+      }
+
+      state.searchStep = payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { consoleLog } = userSlice.actions;
+export const { setSearchStep } = tripDetailsSlice.actions;
 
-export default userSlice.reducer;
+export default tripDetailsSlice.reducer;

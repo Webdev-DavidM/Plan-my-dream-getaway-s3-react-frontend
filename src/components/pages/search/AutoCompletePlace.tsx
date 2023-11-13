@@ -1,22 +1,26 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import { debounce } from "@mui/material/utils";
 
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
+//Mui
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+// import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+// Redux
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
+import { setSearchStep } from "../../../redux/userSlice";
+
+// This key is whitelisted on the Google Maps API for only certain domains
 const GOOGLE_MAPS_API_KEY = "AIzaSyCBsdxQvERIzbM2CuT_0ZKJOBaBLaY6i8s";
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
   if (!position) {
     return;
   }
-
   const script = document.createElement("script");
   script.setAttribute("async", "");
   script.setAttribute("id", id);
@@ -43,10 +47,10 @@ interface PlaceType {
 export default function GoogleMaps() {
   const [value, setValue] = React.useState<PlaceType | null>(null);
   const [inputValue, setInputValue] = React.useState("");
+  const dispatch = useAppDispatch();
   const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
   const loaded = React.useRef(false);
-
-  console.log(value);
+  let step = useAppSelector((state) => state.user.searchStep);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-maps")) {
@@ -116,68 +120,73 @@ export default function GoogleMaps() {
   }, [value, inputValue, fetch]);
 
   return (
-    <Autocomplete
-      id="google-map-demo"
-      sx={{ width: 300 }}
-      getOptionLabel={(option) =>
-        typeof option === "string" ? option : option.description
-      }
-      filterOptions={(x) => x}
-      options={options}
-      autoComplete
-      includeInputInList
-      filterSelectedOptions
-      value={value}
-      noOptionsText="No locations"
-      onChange={(event: any, newValue: PlaceType | null) => {
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-      }}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
-      renderInput={(params) => (
-        <TextField {...params} label="Add a location" fullWidth />
-      )}
-      renderOption={(props, option) => {
-        const matches =
-          option.structured_formatting.main_text_matched_substrings || [];
+    <Grid item xs={12} md={6} py={2}>
+      <Autocomplete
+        id="google-map-demo"
+        data-cy="autocomplete-field"
+        // sx={{ width: "30vw", borderRadius: 25 }}
 
-        const parts = parse(
-          option.structured_formatting.main_text,
-          matches.map((match: any) => [
-            match.offset,
-            match.offset + match.length,
-          ])
-        );
+        getOptionLabel={(option) =>
+          typeof option === "string" ? option : option.description
+        }
+        filterOptions={(x) => x}
+        options={options}
+        autoComplete
+        includeInputInList
+        filterSelectedOptions
+        value={value}
+        noOptionsText="No where selected"
+        onChange={(event: any, newValue: PlaceType | null) => {
+          setOptions(newValue ? [newValue, ...options] : options);
+          setValue(newValue);
+          dispatch(setSearchStep(step + 1));
+        }}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Where would you like to go?"
+            fullWidth
+          />
+        )}
+        renderOption={(props, option) => {
+          const matches =
+            option.structured_formatting.main_text_matched_substrings || [];
 
-        return (
-          <li {...props}>
-            <Grid container alignItems="center">
-              <Grid item sx={{ display: "flex", width: 44 }}>
-                {/* <LocationOnIcon sx={{ color: "text.secondary" }} /> */}
-              </Grid>
-              <Grid
-                item
-                sx={{ width: "calc(100% - 44px)", wordWrap: "break-word" }}
-              >
+          const parts = parse(
+            option.structured_formatting.main_text,
+            matches.map((match: any) => [
+              match.offset,
+              match.offset + match.length,
+            ])
+          );
+
+          return (
+            <li {...props}>
+              <Grid container alignItems="center">
                 {parts.map((part, index) => (
                   <Box
                     key={index}
                     component="span"
-                    sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
+                    data-cy="autocomplete-place"
+                    sx={{
+                      fontWeight: part.highlight ? "bold" : "regular",
+                      // color: "primary.main",
+                    }}
                   >
                     {part.text}
                   </Box>
                 ))}
-                <Typography variant="body2" color="text.secondary">
-                  {option.structured_formatting.secondary_text}
+                <Typography variant="body1">
+                  {` , ${option.structured_formatting.secondary_text}`}
                 </Typography>
               </Grid>
-            </Grid>
-          </li>
-        );
-      }}
-    />
+            </li>
+          );
+        }}
+      />
+    </Grid>
   );
 }

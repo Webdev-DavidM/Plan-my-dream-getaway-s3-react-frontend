@@ -1,7 +1,5 @@
-import React from "react";
 // import { consoleLog } from "./redux/userSlice";
 
-import { useAppSelector } from "./hooks/hooks";
 // import Logo from "./icons/Logo";
 // import Home from "./icons/Home";
 // import Search from "./icons/Search";
@@ -16,29 +14,44 @@ import { useAppSelector } from "./hooks/hooks";
 // import Login from "./components/Login";
 // import Status from "./components/Status";
 // import { Account } from "./components/Account";
-import Search from "./components/pages/search/Search";
-import { Box } from "@mui/material";
+import BottomNavBar from "./components/Footer";
+import Header from "./components/Header";
+import { Grid } from "@mui/material";
+import { useAppSelector } from "./hooks/hooks";
+import PageContainer from "./components/PageContainer";
+import SelectPlace from "./components/pages/search/SelectPlace";
+import Selectinterests from "./components/pages/search/Selectinterests";
+import SelectTravellers from "./components/pages/search/SelectTravellers";
 
 function App() {
-  let name = useAppSelector((state) => state.user.name);
-  console.log(name);
+  let step = useAppSelector((state) => state.user.searchStep);
+  // let name = useAppSelector((state) => state.user.name);
+  // console.log(name);
   //tested again with new develop branch!!
   // const dispatch = useAppDispatch();
   return (
-    <Box
+    <Grid
+      container
       sx={{
         width: "100vw",
         height: "100vh",
-        backgroundColor: "#fafafa",
+        boxSizing: "border-box",
+        position: "relative",
+        p: 1,
+        backgroundColor: "white",
+        // justifyContent: "space-between",
       }}
     >
-      <p>hello</p>
-      <Search />
-      {/* <Account> */}
-      {/* <Signup />
-        <Status />
-        <Login />
-        tested again */}
+      <Header />
+
+      <PageContainer>
+        {step === 1 && <SelectPlace />}
+        {step === 2 && <Selectinterests />}
+        {step === 3 && <SelectTravellers />}
+      </PageContainer>
+
+      <BottomNavBar />
+
       {/* <Logo />
       <Home />
       <Search />
@@ -52,7 +65,7 @@ function App() {
         developed now updated to test again and again
       </button> */}
       {/* </Account> */}
-    </Box>
+    </Grid>
   );
 }
 
