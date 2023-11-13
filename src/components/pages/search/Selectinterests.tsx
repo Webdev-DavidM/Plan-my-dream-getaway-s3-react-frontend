@@ -4,13 +4,13 @@ import React from "react";
 type Props = {};
 
 const Selectinterests = (props: Props) => {
-  const [interests, setInterests] = React.useState<string[]>([
+  const interests = [
     "Great Food",
     "Nightlife",
     "Shopping",
     "Culture",
     "Arts and Theatre",
-  ]);
+  ];
   const [selectedInterests, setSelectedInterests] = React.useState<string[]>(
     []
   );
