@@ -14,14 +14,14 @@
 // import Login from "./components/Login";
 // import Status from "./components/Status";
 // import { Account } from "./components/Account";
-import BottomNavBar from "./components/Footer";
-import Header from "./components/Header";
-import { Grid } from "@mui/material";
-import { useAppSelector } from "./hooks/hooks";
-import PageContainer from "./components/PageContainer";
-import SelectPlace from "./components/pages/search/SelectPlace";
-import Selectinterests from "./components/pages/search/Selectinterests";
-import SelectTravellers from "./components/pages/search/SelectTravellers";
+import BottomNavBar from './components/Footer';
+import Header from './components/Header';
+import { Grid } from '@mui/material';
+import { useAppSelector } from './hooks/hooks';
+import PageContainer from './components/PageContainer';
+import SelectPlace from './components/pages/search/SelectPlace';
+import Selectinterests from './components/pages/search/Selectinterests';
+import SelectTravellers from './components/pages/search/SelectTravellers';
 
 function App() {
   let step = useAppSelector((state) => state.user.searchStep);
@@ -29,19 +29,19 @@ function App() {
   // console.log(name);
   //tested again with new develop branch!!
   // const dispatch = useAppDispatch();
+  console.log(step);
   return (
     <Grid
       container
       sx={{
-        width: "100vw",
-        height: "100vh",
-        boxSizing: "border-box",
-        position: "relative",
+        width: '100vw',
+        height: '100vh',
+        boxSizing: 'border-box',
+        position: 'relative',
         p: 1,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         // justifyContent: "space-between",
-      }}
-    >
+      }}>
       <Header />
 
       <PageContainer>
