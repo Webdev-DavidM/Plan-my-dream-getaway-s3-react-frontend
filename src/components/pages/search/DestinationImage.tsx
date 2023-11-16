@@ -1,6 +1,10 @@
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { FunctionComponent } from "react";
 
+// Store
+import { useAppDispatch } from "../../../hooks/hooks";
+import { setPlace, setSearchStep } from "../../../redux/userSlice";
+
 interface IPropsDestinationImage {
   place: string;
   imageName: string;
@@ -11,6 +15,12 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
   imageName,
 }) => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+
+  const selectRecommendedDestination = (place: string) => {
+    dispatch(setPlace(place));
+    dispatch(setSearchStep(2));
+  };
   const largeDesktop = useMediaQuery(theme.breakpoints.up("lg"));
   return (
     <Grid
@@ -18,6 +28,7 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
       xs={6}
       md={4}
       lg={2}
+      onClick={() => selectRecommendedDestination(place)}
       sx={{
         maxWidth: largeDesktop ? "180px" : "100%",
         justifyContent: "space-between",
@@ -25,6 +36,9 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
         overflow: "hidden",
         borderRadius: 2,
         p: 1,
+        "& :hover": {
+          cursor: "pointer",
+        },
       }}
     >
       <img

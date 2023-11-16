@@ -84,7 +84,7 @@ const Selectinterests = (props: Props) => {
               mt: 3,
             }}
           >
-            Please select at least one interest.
+            {error}
           </Alert>
         </Grid>
       )}
