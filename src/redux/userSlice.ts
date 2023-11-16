@@ -25,13 +25,21 @@ export const tripDetailsSlice = createSlice({
       if (payload < 1 || payload > state.numberOfSteps) {
         return;
       }
+      if (payload < state.searchStep) {
+        state.searchStep = payload;
+        return;
+      }
       if (state.searchStep === 1 && payload === 2) {
         state.searchStep = payload;
+        return;
       }
-
       // If on the interest place and the user has not selected any interest, set an error message
       if (payload === 3 && state.interests.length === 0) {
         state.errorMessage = "Please select at least one interest";
+        return;
+      }
+      if (payload === 4 && state.travellingWith.length === 0) {
+        state.errorMessage = "Please select at least one traveller";
         return;
       }
       if (payload === 3 && state.interests.length > 0) {
@@ -56,10 +64,25 @@ export const tripDetailsSlice = createSlice({
         state.errorMessage = undefined;
       }
     },
+    setSelectTravellingWith: (state, { payload }: PayloadAction<string>) => {
+      if (state.travellingWith.includes(payload as never)) {
+        const updatedTravellingWith = (state.travellingWith =
+          state.travellingWith.filter((item) => item !== payload));
+        state.travellingWith = updatedTravellingWith;
+      } else {
+        state.travellingWith = [...state.travellingWith, payload];
+        state.errorMessage = undefined;
+      }
+    },
   },
 });
 
-export const { setSearchStep, setErrorMessage, setInterests, setPlace } =
-  tripDetailsSlice.actions;
+export const {
+  setSearchStep,
+  setErrorMessage,
+  setInterests,
+  setPlace,
+  setSelectTravellingWith,
+} = tripDetailsSlice.actions;
 
 export default tripDetailsSlice.reducer;
