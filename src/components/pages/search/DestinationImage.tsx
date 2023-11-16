@@ -20,22 +20,13 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
       lg={2}
       sx={{
         maxWidth: largeDesktop ? "180px" : "100%",
-        // maxHeight: largeDesktop ? "180px" : "100%",
         justifyContent: "space-between",
         position: "relative",
         overflow: "hidden",
         borderRadius: 2,
         p: 1,
-
-        // p: 3,
       }}
     >
-      {/* <Grid
-        item
-        sx={{
-       
-        }}
-      > */}
       <img
         src={`/assets/${imageName}.jpeg`}
         alt="cancun"
@@ -43,6 +34,7 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
           height: "100%",
           width: "100%",
           objectFit: "cover",
+          borderRadius: 10,
         }}
       />
 
@@ -59,7 +51,6 @@ const DestinationImage: FunctionComponent<IPropsDestinationImage> = ({
         {place}
       </Typography>
     </Grid>
-    // </Grid>
   );
 };
 
