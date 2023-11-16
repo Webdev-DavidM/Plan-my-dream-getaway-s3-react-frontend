@@ -35,6 +35,9 @@ export const tripDetailsSlice = createSlice({
         state.errorMessage = "Please select at least one interest";
         return;
       }
+      if (payload === 3 && state.interests.length > 0) {
+        state.searchStep = payload;
+      }
     },
     setPlace: (state, { payload }: PayloadAction<string>) => {
       state.place = payload;
