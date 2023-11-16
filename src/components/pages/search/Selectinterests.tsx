@@ -7,6 +7,8 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+
+// Store
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { setInterests } from "../../../redux/userSlice";
 
@@ -24,15 +26,6 @@ const Selectinterests = (props: Props) => {
   let error = useAppSelector((state) => state.user.errorMessage);
   let interests = useAppSelector((state) => state.user.interests);
   const dispatch = useAppDispatch();
-  // const handleClick = (interest: string) => {
-  //   if (selectedInterests.includes(interest)) {
-  //     setSelectedInterests(
-  //       selectedInterests.filter((item) => item !== interest)
-  //     );
-  //   } else {
-  //     setSelectedInterests([...selectedInterests, interest]);
-  //   }
-  // };
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
@@ -60,7 +53,6 @@ const Selectinterests = (props: Props) => {
       </Typography>
       {interestOptions?.map((int: string, index) => {
         const chosen = !!interests.find((interest) => interest === int);
-
         return (
           <Chip
             sx={{
@@ -84,7 +76,7 @@ const Selectinterests = (props: Props) => {
         >
           <Alert
             severity="error"
-            data-cy="error message"
+            data-cy="error-message"
             sx={{
               width: mobile ? "100%" : "50%",
               mt: 3,

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { SearchStep } from "../interfaces/enums";
 
 type InitialState = {
   place: string;
@@ -25,11 +26,17 @@ export const tripDetailsSlice = createSlice({
       if (payload < 1 || payload > state.numberOfSteps) {
         return;
       }
+      if (state.searchStep === 1 && payload === 2) {
+        state.searchStep = payload;
+      }
 
-      state.searchStep = payload;
+      // If on the interest place and the user has not selected any interest, set an error message
+      if (payload === 3 && state.interests.length === 0) {
+        state.errorMessage = "Please select at least one interest";
+        return;
+      }
     },
     setPlace: (state, { payload }: PayloadAction<string>) => {
-      console.log("payload", payload);
       state.place = payload;
     },
     setErrorMessage: (state, { payload }: PayloadAction<string>) => {
@@ -49,7 +56,6 @@ export const tripDetailsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setSearchStep, setErrorMessage, setInterests, setPlace } =
   tripDetailsSlice.actions;
 
