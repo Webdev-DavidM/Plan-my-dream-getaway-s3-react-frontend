@@ -55,6 +55,8 @@ const Selectinterests = (props: Props) => {
         const chosen = !!interests.find((interest) => interest === int);
         return (
           <Chip
+            key={index}
+            data-cy="interestChip"
             sx={{
               minWidth: "100px",
               height: "50px",

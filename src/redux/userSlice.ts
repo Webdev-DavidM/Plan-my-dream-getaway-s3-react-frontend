@@ -51,6 +51,7 @@ export const tripDetailsSlice = createSlice({
         state.interests = updatedInterest;
       } else {
         state.interests = [...state.interests, payload];
+        state.errorMessage = undefined;
       }
     },
   },
