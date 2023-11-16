@@ -45,11 +45,11 @@ export const tripDetailsSlice = createSlice({
       }
 
       // Traveling with step
-      if (payload === 4 && state.travellingWith.length === 0) {
+      if (payload === 4 && state.travellingWith === undefined) {
         state.errorMessage = "Please select at least one traveller";
         return;
       }
-      if (payload === 4 && state.travellingWith.length > 0) {
+      if (payload === 4 && state.travellingWith) {
         state.searchStep = payload;
 
         state.loading = true;
