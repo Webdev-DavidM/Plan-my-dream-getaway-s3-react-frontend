@@ -45,7 +45,7 @@ const SelectPlace = (props: Props) => {
         Choose one.
       </Typography>
       {travellerOptions?.map((group, index) => {
-        const chosen = !!travellers.find((interest) => interest === group);
+        const chosen = group === travellers;
         return (
           <Chip
             data-cy="placeChip"

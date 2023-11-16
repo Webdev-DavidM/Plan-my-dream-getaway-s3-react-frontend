@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 type InitialState = {
   place: string;
   interests: string[] | [];
-  travellingWith: string[] | [];
+  travellingWith: string;
   searchStep: number | undefined;
   numberOfSteps: number;
   errorMessage: string | undefined;
@@ -16,7 +16,7 @@ export const tripDetailsSlice = createSlice({
   initialState: {
     place: "",
     interests: [],
-    travellingWith: [],
+    travellingWith: undefined,
     searchStep: 1,
     numberOfSteps: 4,
     errorMessage: undefined,
@@ -51,6 +51,7 @@ export const tripDetailsSlice = createSlice({
       }
       if (payload === 4 && state.travellingWith.length > 0) {
         state.searchStep = payload;
+
         state.loading = true;
       }
       // need to make the api call here, can i do async from a reducer??
@@ -74,12 +75,10 @@ export const tripDetailsSlice = createSlice({
       }
     },
     setSelectTravellingWith: (state, { payload }: PayloadAction<string>) => {
-      if (state.travellingWith.includes(payload as never)) {
-        const updatedTravellingWith = (state.travellingWith =
-          state.travellingWith.filter((item) => item !== payload));
-        state.travellingWith = updatedTravellingWith;
+      if (state.travellingWith === payload) {
+        state.travellingWith = undefined;
       } else {
-        state.travellingWith = [...state.travellingWith, payload];
+        state.travellingWith = payload;
         state.errorMessage = undefined;
       }
     },
@@ -94,6 +93,7 @@ export const {
   setErrorMessage,
   setInterests,
   setPlace,
+
   setSelectTravellingWith,
   setLoading,
 } = tripDetailsSlice.actions;
