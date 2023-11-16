@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { SearchStep } from "../interfaces/enums";
 
 type InitialState = {
   place: string;
