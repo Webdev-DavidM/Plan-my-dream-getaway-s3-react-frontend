@@ -12,7 +12,7 @@ describe("testing the select interests section", () => {
     cy.getByData("next").click();
     cy.getByData("error-message").should("be.visible");
   });
-  it.only("if the user selects at least one interest, the error message disappears", () => {
+  it("if the user selects at least one interest, the error message disappears", () => {
     cy.getByData("next").click();
     cy.getByData("interestChip").eq(0).click();
     cy.getByData("error-message").should("not.exist");
