@@ -8,6 +8,7 @@ type InitialState = {
   searchStep: number | undefined;
   numberOfSteps: number;
   errorMessage: string | undefined;
+  loading: boolean;
 };
 
 export const tripDetailsSlice = createSlice({
@@ -19,6 +20,7 @@ export const tripDetailsSlice = createSlice({
     searchStep: 1,
     numberOfSteps: 4,
     errorMessage: undefined,
+    loading: false,
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -38,13 +40,20 @@ export const tripDetailsSlice = createSlice({
         state.errorMessage = "Please select at least one interest";
         return;
       }
+      if (payload === 3 && state.interests.length > 0) {
+        state.searchStep = payload;
+      }
+
+      // Traveling with step
       if (payload === 4 && state.travellingWith.length === 0) {
         state.errorMessage = "Please select at least one traveller";
         return;
       }
-      if (payload === 3 && state.interests.length > 0) {
+      if (payload === 4 && state.travellingWith.length > 0) {
         state.searchStep = payload;
+        state.loading = true;
       }
+      // need to make the api call here, can i do async from a reducer??
     },
     setPlace: (state, { payload }: PayloadAction<string>) => {
       state.place = payload;
@@ -74,6 +83,9 @@ export const tripDetailsSlice = createSlice({
         state.errorMessage = undefined;
       }
     },
+    setLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.loading = payload;
+    },
   },
 });
 
@@ -83,6 +95,7 @@ export const {
   setInterests,
   setPlace,
   setSelectTravellingWith,
+  setLoading,
 } = tripDetailsSlice.actions;
 
 export default tripDetailsSlice.reducer;
