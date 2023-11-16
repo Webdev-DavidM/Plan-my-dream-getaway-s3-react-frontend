@@ -14,8 +14,6 @@ const destinations = [
 ];
 
 const PopularDestinations = (props: Props) => {
-  const theme = useTheme();
-
   return (
     <Grid container xs={12} lg={8}>
       <Typography
