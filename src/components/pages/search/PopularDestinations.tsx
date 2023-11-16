@@ -1,5 +1,4 @@
-import { Grid, Typography, useTheme } from "@mui/material";
-import React from "react";
+import { Grid, Typography } from "@mui/material";
 import DestinationImage from "./DestinationImage";
 
 type Props = {};
