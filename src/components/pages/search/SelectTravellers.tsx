@@ -9,14 +9,14 @@ import {
 
 // store
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { setSelectTravellingWith } from "../../../redux/userSlice";
+import { setSelectTravellingWith } from "../../../redux/tripDetailsSlice";
 
 type Props = {};
 const travellerOptions = ["Going solo", "Partner", "Friends", "Family"];
 
 const SelectPlace = (props: Props) => {
-  let error = useAppSelector((state) => state.user.errorMessage);
-  let travellers = useAppSelector((state) => state.user.travellingWith);
+  let error = useAppSelector((state) => state.tripDetails.errorMessage);
+  let travellers = useAppSelector((state) => state.tripDetails.travellingWith);
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("md"));

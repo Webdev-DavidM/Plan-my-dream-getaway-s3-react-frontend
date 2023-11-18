@@ -24,8 +24,8 @@ const loadingMessages = [
 ];
 
 function App() {
-  let step = useAppSelector((state) => state.user.searchStep);
-  let loading = useAppSelector((state) => state.user.loading);
+  let step = useAppSelector((state) => state.tripDetails.searchStep);
+  let loading = useAppSelector((state) => state.tripDetails.loading);
 
   const [count, setCount] = useState(0);
 

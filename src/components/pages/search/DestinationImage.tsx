@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 
 // Store
 import { useAppDispatch } from "../../../hooks/hooks";
-import { setPlace, setSearchStep } from "../../../redux/userSlice";
+import { setPlace, setSearchStep } from "../../../redux/tripDetailsSlice";
 
 interface IPropsDestinationImage {
   place: string;
