@@ -2,12 +2,12 @@ import { Button, Grid } from "@mui/material";
 
 // Store
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { setSearchStep } from "../redux/userSlice";
+import { setSearchStep } from "../redux/tripDetailsSlice";
 
 type Props = {};
 
 const BottomNavBar = (props: Props) => {
-  let { searchStep } = useAppSelector((state) => state.user);
+  let { searchStep } = useAppSelector((state) => state.tripDetails);
   const dispatch = useAppDispatch();
 
   return (

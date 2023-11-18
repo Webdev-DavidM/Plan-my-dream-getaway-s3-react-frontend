@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { setPlace, setSearchStep } from "../../../redux/userSlice";
+import { setPlace, setSearchStep } from "../../../redux/tripDetailsSlice";
 import { useRef, useState } from "react";
 
 // This key is whitelisted on the Google Maps API for only certain domains
@@ -51,7 +51,7 @@ export default function GoogleMaps() {
   const dispatch = useAppDispatch();
   const [options, setOptions] = useState<readonly PlaceType[]>([]);
   const loaded = useRef(false);
-  let step = useAppSelector((state) => state.user.searchStep);
+  let step = useAppSelector((state) => state.tripDetails.searchStep);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-maps")) {

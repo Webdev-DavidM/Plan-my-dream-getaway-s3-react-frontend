@@ -10,7 +10,7 @@ import React from "react";
 
 // Store
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { setInterests } from "../../../redux/userSlice";
+import { setInterests } from "../../../redux/tripDetailsSlice";
 
 type Props = {};
 
@@ -23,8 +23,8 @@ const interestOptions: string[] = [
 ];
 
 const Selectinterests = (props: Props) => {
-  let error = useAppSelector((state) => state.user.errorMessage);
-  let interests = useAppSelector((state) => state.user.interests);
+  let error = useAppSelector((state) => state.tripDetails.errorMessage);
+  let interests = useAppSelector((state) => state.tripDetails.interests);
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("md"));

@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 
 type InitialState = {
   place: string;
@@ -9,7 +10,35 @@ type InitialState = {
   numberOfSteps: number;
   errorMessage: string | undefined;
   loading: boolean;
+  tripRecommendation: any;
 };
+
+export const getRecommendations = createAsyncThunk<any>(
+  "tripDetails/getRecommendations",
+  async (args, { getState, dispatch }) => {
+    console.log("api call");
+    const trip = getState();
+    console.log("trip", trip);
+    try {
+      const data = await axios.post(
+        // this currently doesnt work with the custom domain
+        "https://api-dev.planmydreamgetaway.co.uk/places",
+        {
+          place: "London",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("data", data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const tripDetailsSlice = createSlice({
   name: "tripDetails",
@@ -21,6 +50,7 @@ export const tripDetailsSlice = createSlice({
     numberOfSteps: 4,
     errorMessage: undefined,
     loading: false,
+    tripRecommendation: {},
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -52,7 +82,7 @@ export const tripDetailsSlice = createSlice({
       if (payload === 4 && state.travellingWith) {
         state.searchStep = payload;
 
-        state.loading = true;
+        getRecommendations();
       }
       // need to make the api call here, can i do async from a reducer??
     },
@@ -85,6 +115,42 @@ export const tripDetailsSlice = createSlice({
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getRecommendations.pending, (state, action) => {
+        state.loading = true;
+        // if (state.loading === 'idle') {
+        //   state.loading = 'pending'
+        //   state.currentRequestId = action.meta.requestId
+        // }
+      })
+      .addCase(getRecommendations.fulfilled, (state, action) => {
+        // const { requestId } = action.meta;
+        state.loading = false;
+        console.log("action.payload.data", action.payload.data);
+        state.tripRecommendation = action.payload.data.message;
+
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.entities.push(action.payload)
+        //   state.currentRequestId = undefined
+        // }
+      })
+      .addCase(getRecommendations.rejected, (state, action) => {
+        const { requestId } = action.meta;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.error = action.error
+        //   state.currentRequestId = undefined
+        // }
+      });
   },
 });
 

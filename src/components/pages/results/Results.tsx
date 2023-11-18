@@ -1,33 +1,51 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecommendations } from "../../../redux/tripDetailsSlice";
+import { AppDispatch } from "../../../redux/store";
 
 type Props = {};
 
 const Results = (props: Props) => {
-  const place = useSelector((state: any) => state.user.place);
-  const interests = useSelector((state: any) => state.user.interests);
-  const travellers = useSelector((state: any) => state.user.travellingWith);
-  const getData = async () => {
-    const data = await axios.post(
-      "https://api-dev.planmydreamgetaway.co.uk/places",
-      {
-        place: "London",
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    );
-    console.log("data", data);
-    return data;
-  };
+  const place = useSelector((state: any) => state.tripDetails.place);
+  const dispatch = useDispatch<AppDispatch>();
+  const interests = useSelector((state: any) => state.tripDetails.interests);
+  const travellers = useSelector(
+    (state: any) => state.tripDetails.travellingWith
+  );
+
+  // const getData = async () => {
+  //   const corsTest = await axios.post(
+  //     "https://api-dev.planmydreamgetaway.co.uk/cors-test",
+  //     {
+  //       place: "London",
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   console.log("corsTest", corsTest);
+  //   const data = await axios.post(
+  //     // this currently doesnt work with the custom domain
+  //     "https://api-dev.planmydreamgetaway.co.uk/places",
+  //     {
+  //       place: "London",
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   console.log("data", data);
+  //   return data;
+  // };
 
   useEffect(() => {
-    if (place && interests && travellers) getData();
+    if (place && interests && travellers) dispatch(getRecommendations());
   }, [place, interests, travellers]);
 
   const theme = useTheme();
