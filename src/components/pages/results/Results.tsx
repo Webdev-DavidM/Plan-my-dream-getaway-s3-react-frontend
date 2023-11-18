@@ -1,5 +1,4 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecommendations } from "../../../redux/tripDetailsSlice";
