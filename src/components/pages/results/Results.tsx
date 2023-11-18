@@ -14,38 +14,9 @@ const Results = (props: Props) => {
     (state: any) => state.tripDetails.travellingWith
   );
 
-  // const getData = async () => {
-  //   const corsTest = await axios.post(
-  //     "https://api-dev.planmydreamgetaway.co.uk/cors-test",
-  //     {
-  //       place: "London",
-  //     },
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   console.log("corsTest", corsTest);
-  //   const data = await axios.post(
-  //     // this currently doesnt work with the custom domain
-  //     "https://api-dev.planmydreamgetaway.co.uk/places",
-  //     {
-  //       place: "London",
-  //     },
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   console.log("data", data);
-  //   return data;
-  // };
-
   useEffect(() => {
     if (place && interests && travellers) dispatch(getRecommendations());
-  }, [place, interests, travellers]);
+  }, [place, interests, travellers, dispatch]);
 
   const theme = useTheme();
   const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
