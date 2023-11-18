@@ -141,7 +141,7 @@ export const tripDetailsSlice = createSlice({
         // }
       })
       .addCase(getRecommendations.rejected, (state, action) => {
-        const { requestId } = action.meta;
+        // const { requestId } = action.meta;
         // if (
         //   state.loading === 'pending' &&
         //   state.currentRequestId === requestId
