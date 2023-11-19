@@ -16,7 +16,7 @@ import { setPlace, setSearchStep } from "../../../redux/tripDetailsSlice";
 import { useRef, useState } from "react";
 
 // This key is whitelisted on the Google Maps API for only certain domains
-const GOOGLE_MAPS_API_KEY = "AIzaSyAumyfvpenar1CqdKPbQw4UdaQrbut9XKA";
+const GOOGLE_MAPS_API_KEY = "AIzaSyAesYcXnCJ64ZaU-eKLkJnBvr2BW7xpSbo";
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
   if (!position) {
