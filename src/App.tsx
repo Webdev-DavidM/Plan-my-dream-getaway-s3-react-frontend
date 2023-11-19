@@ -16,11 +16,11 @@ import Results from "./components/pages/results/Results";
 import { Box, Grid, Modal, CircularProgress, Typography } from "@mui/material";
 
 const loadingMessages = [
-  "We are loading your trip for you...",
-  "We are looking for the best places for you...",
+  "We're loading your trip for you...",
+  "We're looking for the best places for you...",
   "This can take some time...",
-  "We are almost done...",
-  "We hope your like your trip...",
+  "We're almost done...",
+  "We hope you like your trip...",
 ];
 
 function App() {
