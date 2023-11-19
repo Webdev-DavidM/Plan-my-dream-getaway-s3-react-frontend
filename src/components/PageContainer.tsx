@@ -7,14 +7,14 @@ type Props = {
 
 function PageContainer({ children }: Props) {
   const theme = useTheme();
-  const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
+  const smallerThanDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <Grid
       container
       xs={12}
       sx={{
-        minHeight: notLarge ? "110vh" : "100vh",
+        minHeight: smallerThanDesktop ? "110vh" : "100vh",
         justifyContent: "center",
         alignItems: "center",
         width: "100%",

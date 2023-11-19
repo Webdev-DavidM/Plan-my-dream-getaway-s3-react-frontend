@@ -1,11 +1,13 @@
 import { Button, Grid } from "@mui/material";
+
+// Store
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { setSearchStep } from "../redux/userSlice";
+import { setSearchStep } from "../redux/tripDetailsSlice";
 
 type Props = {};
 
 const BottomNavBar = (props: Props) => {
-  let step = useAppSelector((state) => state.user.searchStep);
+  let { searchStep } = useAppSelector((state) => state.tripDetails);
   const dispatch = useAppDispatch();
 
   return (
@@ -22,33 +24,36 @@ const BottomNavBar = (props: Props) => {
         left: "0",
         backgroundColor: "white",
         right: "0",
+        borderTop: "1px solid #e0e0e0",
       }}
       gap={1}
     >
       <Button
         variant="contained"
-        disabled={step === 1}
+        disabled={searchStep === 1}
         data-cy="previous"
         sx={{
           maxHeight: "2.5rem",
+          borderRadius: "15px",
         }}
-        onClick={() => dispatch(setSearchStep(step - 1))}
+        onClick={() => dispatch(setSearchStep(searchStep - 1))}
       >
         Previous
       </Button>
-      {step < 4 && (
+      {searchStep < 4 && (
         <Button
           data-cy="next"
           sx={{
             maxHeight: "2.5rem",
+            borderRadius: "15px",
           }}
           variant="contained"
-          onClick={() => dispatch(setSearchStep(step + 1))}
+          onClick={() => dispatch(setSearchStep(searchStep + 1))}
         >
           Next
         </Button>
       )}
-      {step === 4 && (
+      {searchStep === 4 && (
         <Button
           data-cy="save"
           sx={{

@@ -1,34 +1,45 @@
-// import { consoleLog } from "./redux/userSlice";
+import { useEffect, useState } from "react";
 
-// import Logo from "./icons/Logo";
-// import Home from "./icons/Home";
-// import Search from "./icons/Search";
-// import Explore from "./icons/Explore";
-// import Message from "./icons/Message";
-// import Likes from "./icons/Likes";
-// import Create from "./icons/Create";
-// import WrittenLogo from "./icons/WrittenLogo";
+// Store
+import { useAppSelector } from "./hooks/hooks";
 
 // Components
-// import Signup from "./components/Signup";
-// import Login from "./components/Login";
-// import Status from "./components/Status";
-// import { Account } from "./components/Account";
-import BottomNavBar from "./components/Footer";
 import Header from "./components/Header";
-import { Grid } from "@mui/material";
-import { useAppSelector } from "./hooks/hooks";
+import BottomNavBar from "./components/Footer";
 import PageContainer from "./components/PageContainer";
 import SelectPlace from "./components/pages/search/SelectPlace";
 import Selectinterests from "./components/pages/search/Selectinterests";
 import SelectTravellers from "./components/pages/search/SelectTravellers";
+import Results from "./components/pages/results/Results";
+
+// Mui
+import { Box, Grid, Modal, CircularProgress, Typography } from "@mui/material";
+
+const loadingMessages = [
+  "We're loading your trip for you...",
+  "We're looking for the best places for you...",
+  "This can take some time...",
+  "We're almost done...",
+  "We hope you like your trip...",
+];
 
 function App() {
-  let step = useAppSelector((state) => state.user.searchStep);
-  // let name = useAppSelector((state) => state.user.name);
-  // console.log(name);
-  //tested again with new develop branch!!
-  // const dispatch = useAppDispatch();
+  let step = useAppSelector((state) => state.tripDetails.searchStep);
+  let loading = useAppSelector((state) => state.tripDetails.loading);
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Increment count every second
+      if (count === loadingMessages.length - 1) return setCount(0);
+      setCount((prevCount) => prevCount + 1);
+    }, 3000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [count]);
+
   return (
     <Grid
       container
@@ -39,32 +50,44 @@ function App() {
         position: "relative",
         p: 1,
         backgroundColor: "white",
-        // justifyContent: "space-between",
       }}
     >
       <Header />
-
       <PageContainer>
         {step === 1 && <SelectPlace />}
         {step === 2 && <Selectinterests />}
         {step === 3 && <SelectTravellers />}
+        {step === 4 && <Results />}
       </PageContainer>
-
       <BottomNavBar />
-
-      {/* <Logo />
-      <Home />
-      <Search />
-      <Explore />
-      <Message />
-      <Likes />
-      <Create />
-      <WrittenLogo />
-
-      <button onClick={() => dispatch(consoleLog({ name: "bob" }))}>
-        developed now updated to test again and again
-      </button> */}
-      {/* </Account> */}
+      <Modal open={loading}>
+        <Box
+          sx={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Grid
+            container
+            sx={{
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress size="3rem" data-cy="loading-spinner" />
+            <Typography mt={2} color="primary" variant="h5">
+              {loadingMessages[count % loadingMessages.length]}
+            </Typography>
+          </Grid>
+        </Box>
+      </Modal>
     </Grid>
   );
 }

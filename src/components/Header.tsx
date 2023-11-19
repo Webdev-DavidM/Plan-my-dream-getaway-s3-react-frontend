@@ -20,6 +20,7 @@ export default function Header() {
         zIndex: 100,
         overflowY: "hidden" /* Hide vertical scrollbar */,
         overflowX: "hidden" /* Hide horizontal scrollbar */,
+
         // p: 3,
       }}
     >

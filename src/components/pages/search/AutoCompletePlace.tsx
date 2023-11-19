@@ -12,10 +12,11 @@ import Typography from "@mui/material/Typography";
 
 // Redux
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { setSearchStep } from "../../../redux/userSlice";
+import { setPlace, setSearchStep } from "../../../redux/tripDetailsSlice";
+import { useRef, useState } from "react";
 
 // This key is whitelisted on the Google Maps API for only certain domains
-const GOOGLE_MAPS_API_KEY = "AIzaSyCBsdxQvERIzbM2CuT_0ZKJOBaBLaY6i8s";
+const GOOGLE_MAPS_API_KEY = "AIzaSyAesYcXnCJ64ZaU-eKLkJnBvr2BW7xpSbo";
 
 function loadScript(src: string, position: HTMLElement | null, id: string) {
   if (!position) {
@@ -45,12 +46,12 @@ interface PlaceType {
 }
 
 export default function GoogleMaps() {
-  const [value, setValue] = React.useState<PlaceType | null>(null);
-  const [inputValue, setInputValue] = React.useState("");
+  const [value, setValue] = useState<PlaceType | null>(null);
+  const [inputValue, setInputValue] = useState("");
   const dispatch = useAppDispatch();
-  const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
-  const loaded = React.useRef(false);
-  let step = useAppSelector((state) => state.user.searchStep);
+  const [options, setOptions] = useState<readonly PlaceType[]>([]);
+  const loaded = useRef(false);
+  let step = useAppSelector((state) => state.tripDetails.searchStep);
 
   if (typeof window !== "undefined" && !loaded.current) {
     if (!document.querySelector("#google-maps")) {
@@ -124,8 +125,11 @@ export default function GoogleMaps() {
       <Autocomplete
         id="google-map-demo"
         data-cy="autocomplete-field"
-        // sx={{ width: "30vw", borderRadius: 25 }}
-
+        sx={{
+          "& .MuiInputBase-root": {
+            borderRadius: "20px",
+          },
+        }}
         getOptionLabel={(option) =>
           typeof option === "string" ? option : option.description
         }
@@ -139,6 +143,7 @@ export default function GoogleMaps() {
         onChange={(event: any, newValue: PlaceType | null) => {
           setOptions(newValue ? [newValue, ...options] : options);
           setValue(newValue);
+          dispatch(setPlace(newValue.description));
           dispatch(setSearchStep(step + 1));
         }}
         onInputChange={(event, newInputValue) => {
@@ -173,7 +178,6 @@ export default function GoogleMaps() {
                     data-cy="autocomplete-place"
                     sx={{
                       fontWeight: part.highlight ? "bold" : "regular",
-                      // color: "primary.main",
                     }}
                   >
                     {part.text}
