@@ -15,7 +15,15 @@ const Results = (props: Props) => {
   );
 
   useEffect(() => {
-    if (place && interests && travellers) dispatch(getRecommendations());
+    if (place && interests && travellers) {
+      const data = {
+        place: place,
+        interests: interests,
+        travellers: travellers,
+      };
+
+      dispatch(getRecommendations(data)); // Pass an empty object as an argument
+    }
   }, [place, interests, travellers, dispatch]);
 
   const theme = useTheme();

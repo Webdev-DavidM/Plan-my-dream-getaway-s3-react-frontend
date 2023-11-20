@@ -13,18 +13,25 @@ type InitialState = {
   tripRecommendation: any;
 };
 
-export const getRecommendations = createAsyncThunk<any>(
+export const getRecommendations: any = createAsyncThunk<any>(
   "tripDetails/getRecommendations",
-  async (args, { getState, dispatch }) => {
-    console.log("api call");
+  async (data: any, { dispatch, getState }) => {
     const trip = getState();
     console.log("trip", trip);
+    console.log("data", data);
+    const { place, interests, travellers } = data;
+    console.log("interests", interests);
+    console.log("travellers", travellers);
+
     try {
+      console.log(axios.defaults.timeout);
+      axios.defaults.timeout = 90000;
+      console.log(axios.defaults.timeout);
       const data = await axios.post(
         // this currently doesnt work with the custom domain
         "https://api-dev.planmydreamgetaway.co.uk/places",
         {
-          place: "London",
+          place: place,
         },
         {
           headers: {
