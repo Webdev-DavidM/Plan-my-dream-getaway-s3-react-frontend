@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 type InitialState = {
   place: string;
@@ -10,7 +9,7 @@ type InitialState = {
   numberOfSteps: number;
   errorMessage: string | undefined;
   loading: boolean;
-  tripRecommendation: any;
+  tripRecommendation: string;
 };
 
 export const getRecommendations: any = createAsyncThunk<any>(
@@ -24,25 +23,38 @@ export const getRecommendations: any = createAsyncThunk<any>(
     console.log("travellers", travellers);
 
     try {
-      console.log(axios.defaults.timeout);
-      axios.defaults.timeout = 90000;
-      console.log(axios.defaults.timeout);
-      const data = await axios.post(
-        // this currently doesnt work with the custom domain
-        "https://api-dev.planmydreamgetaway.co.uk/places",
-        {
-          place: place,
+      dispatch(setLoading(true));
+
+      const response = await fetch("http://localhost:4000/", {
+        method: "post",
+        headers: {
+          Accept: "application/json, text/plain, */*", // indicates which files we are able to understand
+          "Content-Type": "application/json", // indicates what the server actually sent
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+        body: JSON.stringify({ place: `${place}` }), // server is expecting JSON
+      });
+      if (!response.ok || !response.body) {
+        throw response.statusText;
+      }
+      dispatch(setLoading(false));
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      const loopRunner = true;
+
+      while (loopRunner) {
+        const { value, done } = await reader.read();
+        if (done) {
+          break;
         }
-      );
-      console.log("data", data);
-      return data;
-    } catch (error) {
-      console.log(error);
+        const decodedChunk = decoder.decode(value, { stream: true });
+        // setAnswer((answer) => answer + decodedChunk);
+        // console.log(decodedChunk);
+        dispatch(setTripRecommendation(decodedChunk));
+      }
+    } catch (err) {
+      console.error(err, "err");
+    } finally {
+      // setLoading(false);
     }
   }
 );
@@ -57,7 +69,7 @@ export const tripDetailsSlice = createSlice({
     numberOfSteps: 4,
     errorMessage: undefined,
     loading: false,
-    tripRecommendation: {},
+    tripRecommendation: "",
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -89,7 +101,7 @@ export const tripDetailsSlice = createSlice({
       if (payload === 4 && state.travellingWith) {
         state.searchStep = payload;
 
-        getRecommendations();
+        // getRecommendations();
       }
       // need to make the api call here, can i do async from a reducer??
     },
@@ -121,6 +133,11 @@ export const tripDetailsSlice = createSlice({
     },
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
+    },
+    setTripRecommendation: (state, { payload }: PayloadAction<string>) => {
+      console.log("payload", payload);
+      console.log("state.tripRecommendation", state.tripRecommendation);
+      state.tripRecommendation += payload;
     },
   },
   extraReducers: (builder) => {
@@ -166,7 +183,7 @@ export const {
   setErrorMessage,
   setInterests,
   setPlace,
-
+  setTripRecommendation,
   setSelectTravellingWith,
   setLoading,
 } = tripDetailsSlice.actions;
