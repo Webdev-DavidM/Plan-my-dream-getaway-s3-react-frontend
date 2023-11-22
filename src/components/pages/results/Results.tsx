@@ -20,7 +20,7 @@ const Results = (props: Props) => {
   useEffect(() => {
     // also request the place summary here and add to the overall topFivePlacesAllData
     dispatch(getTopFivePlaces());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (topFivePlaces.length) {
