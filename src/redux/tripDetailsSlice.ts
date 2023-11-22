@@ -2,6 +2,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+type PlaceImages = {
+  place: string;
+  imageUrl: string[];
+};
+
+type TopFivePlaces = {
+  place?: string;
+  summary?: string;
+  image?: PlaceImages;
+};
+
 type InitialState = {
   place: string;
   interests: string[] | [];
@@ -10,28 +21,43 @@ type InitialState = {
   numberOfSteps: number;
   errorMessage: string | undefined;
   loading: boolean;
-  tripRecommendation: any;
+  tripSummary: string;
+  topFivePlacesAllData: TopFivePlaces[] | [];
+  // As I am waiting for the data to come back from the api call, I have split up
+  // the data below so it is easier to access in the components
+  topFivePlaces: string[];
+  topFivePlacesSummary: [];
 };
 
-export const getRecommendations: any = createAsyncThunk<any>(
-  "tripDetails/getRecommendations",
+export const getTopFivePlaces: any = createAsyncThunk<any>(
+  "tripDetails/topFivePlaces",
   async (data: any, { dispatch, getState }) => {
-    const trip = getState();
-    console.log("trip", trip);
-    console.log("data", data);
-    const { place, interests, travellers } = data;
-    console.log("interests", interests);
-    console.log("travellers", travellers);
+    const state: any = getState();
+    const place = state.tripDetails.place;
 
+    console.log("place", place);
     try {
-      console.log(axios.defaults.timeout);
-      axios.defaults.timeout = 90000;
-      console.log(axios.defaults.timeout);
-      const data = await axios.post(
-        // this currently doesnt work with the custom domain
-        "https://api-dev.planmydreamgetaway.co.uk/places",
+      const topFive = await axios.post("http://localhost:4000/topFivePlaces", {
+        place: `${place}`,
+      });
+      console.log("topFive", topFive);
+
+      return topFive;
+    } catch {
+      console.error("err");
+    }
+  }
+);
+
+export const getTopFivePlaceImages: any = createAsyncThunk<any>(
+  "tripDetails/topFivePlaceImages",
+  async (placesArray: any, { dispatch, getState }) => {
+    console.log("placesArray", placesArray);
+    try {
+      const topFiveImages = axios.post(
+        "https://g5zdp9htoh.execute-api.eu-west-2.amazonaws.com/dev/placesPhotos",
         {
-          place: place,
+          places: placesArray,
         },
         {
           headers: {
@@ -39,10 +65,10 @@ export const getRecommendations: any = createAsyncThunk<any>(
           },
         }
       );
-      console.log("data", data);
-      return data;
-    } catch (error) {
-      console.log(error);
+
+      return topFiveImages;
+    } catch {
+      console.error("err");
     }
   }
 );
@@ -57,7 +83,9 @@ export const tripDetailsSlice = createSlice({
     numberOfSteps: 4,
     errorMessage: undefined,
     loading: false,
-    tripRecommendation: {},
+    tripSummary: "",
+    topFivePlaces: [],
+    topFivePlacesSummary: [],
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -89,7 +117,7 @@ export const tripDetailsSlice = createSlice({
       if (payload === 4 && state.travellingWith) {
         state.searchStep = payload;
 
-        getRecommendations();
+        // getRecommendations();
       }
       // need to make the api call here, can i do async from a reducer??
     },
@@ -122,21 +150,36 @@ export const tripDetailsSlice = createSlice({
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
     },
+
+    // Results page
+    setTripSummary: (state, { payload }: PayloadAction<string>) => {
+      state.tripSummary = payload;
+    },
   },
   extraReducers: (builder) => {
+    // getTopFivePlaces
     builder
-      .addCase(getRecommendations.pending, (state, action) => {
-        state.loading = true;
+      .addCase(getTopFivePlaces.pending, (state, action) => {
+        // state.loading = true;
         // if (state.loading === 'idle') {
         //   state.loading = 'pending'
         //   state.currentRequestId = action.meta.requestId
         // }
       })
-      .addCase(getRecommendations.fulfilled, (state, action) => {
+      .addCase(getTopFivePlaces.fulfilled, (state, action) => {
         // const { requestId } = action.meta;
-        state.loading = false;
-        console.log("action.payload.data", action.payload.data);
-        state.tripRecommendation = action.payload.data.message;
+        // state.loading = false;
+
+        console.log("top 5 places", action.payload.data);
+        const updatedArray = action.payload.data.map((place: any) => {
+          return {
+            place: place,
+          };
+        });
+
+        state.topFivePlaces = updatedArray;
+
+        // state.tripRecommendation = action.payload.data.message;
 
         // if (
         //   state.loading === 'pending' &&
@@ -147,7 +190,44 @@ export const tripDetailsSlice = createSlice({
         //   state.currentRequestId = undefined
         // }
       })
-      .addCase(getRecommendations.rejected, (state, action) => {
+      .addCase(getTopFivePlaces.rejected, (state, action) => {
+        // const { requestId } = action.meta;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.error = action.error
+        //   state.currentRequestId = undefined
+        // }
+      });
+    // getTopFivePlaceImages
+    builder
+      .addCase(getTopFivePlaceImages.pending, (state, action) => {
+        // if (state.loading === 'idle') {
+        //   state.loading = 'pending'
+        //   state.currentRequestId = action.meta.requestId
+        // }
+      })
+      .addCase(getTopFivePlaceImages.fulfilled, (state, action) => {
+        console.log("top 5 images", action.payload.data);
+        state.topFivePlacesAllData = action.payload.data.message;
+        // const { requestId } = action.meta;
+        // state.loading = false;
+        // state.topFivePlaces = action.payload.data;
+        // getTopFivePlaceImages(action.payload.data);
+        // state.tripRecommendation = action.payload.data.message;
+
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.entities.push(action.payload)
+        //   state.currentRequestId = undefined
+        // }
+      })
+      .addCase(getTopFivePlaceImages.rejected, (state, action) => {
         // const { requestId } = action.meta;
         // if (
         //   state.loading === 'pending' &&
@@ -166,9 +246,9 @@ export const {
   setErrorMessage,
   setInterests,
   setPlace,
-
   setSelectTravellingWith,
   setLoading,
+  setTripSummary,
 } = tripDetailsSlice.actions;
 
 export default tripDetailsSlice.reducer;

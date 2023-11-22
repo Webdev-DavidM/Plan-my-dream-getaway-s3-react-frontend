@@ -1,30 +1,35 @@
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import InteractiveMap from "./InteractiveMap";
+import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
+import {
+  getTopFivePlaceImages,
+  getTopFivePlaces,
+} from "../../../redux/tripDetailsSlice";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getRecommendations } from "../../../redux/tripDetailsSlice";
-import { AppDispatch } from "../../../redux/store";
+import { useSelector, useDispatch } from "react-redux";
 
 type Props = {};
 
 const Results = (props: Props) => {
-  const place = useSelector((state: any) => state.tripDetails.place);
-  const dispatch = useDispatch<AppDispatch>();
-  const interests = useSelector((state: any) => state.tripDetails.interests);
-  const travellers = useSelector(
-    (state: any) => state.tripDetails.travellingWith
+  const { placeSummary } = useStreamPlaceSummary();
+  const dispatch = useDispatch();
+  const topFivePlaces = useSelector(
+    (state: any) => state.tripDetails.topFivePlaces
   );
 
   useEffect(() => {
-    if (place && interests && travellers) {
-      const data = {
-        place: place,
-        interests: interests,
-        travellers: travellers,
-      };
+    // also request the place summary here and add to the overall topFivePlacesAllData
+    dispatch(getTopFivePlaces());
+  }, []);
 
-      dispatch(getRecommendations(data)); // Pass an empty object as an argument
+  useEffect(() => {
+    if (topFivePlaces.length) {
+      // if the five places are back from and can go to the backend to get the images,
+      // these hops mean I have something to show the user as I wait for the images to come back
+
+      dispatch(getTopFivePlaceImages(topFivePlaces));
     }
-  }, [place, interests, travellers, dispatch]);
+  }, [topFivePlaces, dispatch]);
 
   const theme = useTheme();
   const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -37,7 +42,17 @@ const Results = (props: Props) => {
         paddingBottom: notLarge ? "20vh" : "null",
       }}
     >
-      Results
+      <Grid item>
+        <InteractiveMap />
+      </Grid>
+      <Typography
+        sx={{
+          height: "auto",
+          width: "100%",
+        }}
+      >
+        {placeSummary}
+      </Typography>
     </Grid>
   );
 };
