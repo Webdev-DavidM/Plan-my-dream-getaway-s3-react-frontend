@@ -19,7 +19,9 @@ const Results = (props: Props) => {
 
   useEffect(() => {
     // also request the place summary here and add to the overall topFivePlacesAllData
-    dispatch(getTopFivePlaces());
+    // this api call is commented out for now below
+    // until i can host my server
+    // dispatch(getTopFivePlaces());
   }, [dispatch]);
 
   useEffect(() => {
