@@ -14,7 +14,6 @@ import Results from "./components/pages/results/Results";
 
 // Mui
 import { Box, Grid, Modal, CircularProgress, Typography } from "@mui/material";
-import axios from "axios";
 
 const loadingMessages = [
   "We're loading your trip for you...",
@@ -27,7 +26,6 @@ const loadingMessages = [
 function App() {
   let step = useAppSelector((state) => state.tripDetails.searchStep);
   let loading = useAppSelector((state) => state.tripDetails.loading);
-  const [total, setTotal] = useState("");
 
   const [count, setCount] = useState(0);
 
@@ -56,8 +54,7 @@ function App() {
     >
       <Header />
       <PageContainer>
-        {total}
-        {step === 1 && <SelectPlace total={total} />}
+        {step === 1 && <SelectPlace />}
         {step === 2 && <Selectinterests />}
         {step === 3 && <SelectTravellers />}
         {step === 4 && <Results />}
