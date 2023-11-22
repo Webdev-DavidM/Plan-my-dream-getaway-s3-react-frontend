@@ -3,7 +3,6 @@ import AutoCompletePlace from "./AutoCompletePlace";
 import PopularDestinations from "./PopularDestinations";
 
 function SelectPlace({ total }) {
-  console.log(total);
   const theme = useTheme();
   const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
   return (

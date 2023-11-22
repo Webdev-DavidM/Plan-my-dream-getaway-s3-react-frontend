@@ -1,75 +1,35 @@
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import InteractiveMap from "./InteractiveMap";
+import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
-  getRecommendations,
-  setLoading,
-  setTripRecommendation,
+  getTopFivePlaceImages,
+  getTopFivePlaces,
 } from "../../../redux/tripDetailsSlice";
-import { AppDispatch } from "../../../redux/store";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 type Props = {};
 
 const Results = (props: Props) => {
-  const place = useSelector((state: any) => state.tripDetails.place);
-  const dispatch = useDispatch<AppDispatch>();
-  const [answer, setAnswer] = useState("");
-  const interests = useSelector((state: any) => state.tripDetails.interests);
-  const travellers = useSelector(
-    (state: any) => state.tripDetails.travellingWith
+  const { placeSummary } = useStreamPlaceSummary();
+  const dispatch = useDispatch();
+  const topFivePlaces = useSelector(
+    (state: any) => state.tripDetails.topFivePlaces
   );
-  const tripRecommendations = useSelector(
-    (state: any) => state.tripDetails.tripRecommendations
-  );
-
-  const getRecommendations = async (data: any) => {
-    try {
-      dispatch(setLoading(true));
-
-      const response = await fetch("http://localhost:4000/", {
-        method: "post",
-        headers: {
-          Accept: "application/json, text/plain, */*", // indicates which files we are able to understand
-          "Content-Type": "application/json", // indicates what the server actually sent
-        },
-        body: JSON.stringify({ place: `${place}` }), // server is expecting JSON
-      });
-      if (!response.ok || !response.body) {
-        throw response.statusText;
-      }
-      dispatch(setLoading(false));
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      const loopRunner = true;
-
-      while (loopRunner) {
-        const { value, done } = await reader.read();
-        if (done) {
-          break;
-        }
-        const decodedChunk = decoder.decode(value, { stream: true });
-        setAnswer((answer) => answer + decodedChunk);
-      }
-    } catch (err) {
-      console.error(err, "err");
-    } finally {
-    }
-  };
 
   useEffect(() => {
-    // if (place && interests && travellers) {
-    const data = {
-      place: place,
-      interests: interests,
-      travellers: travellers,
-    };
-    // };
-
-    getRecommendations(data); // Pass an empty object as an argument
-    // }
+    // also request the place summary here and add to the overall topFivePlacesAllData
+    dispatch(getTopFivePlaces());
   }, []);
 
-  console.log(tripRecommendations);
+  useEffect(() => {
+    if (topFivePlaces.length) {
+      // if the five places are back from and can go to the backend to get the images,
+      // these hops mean I have something to show the user as I wait for the images to come back
+
+      dispatch(getTopFivePlaceImages(topFivePlaces));
+    }
+  }, [topFivePlaces, dispatch]);
 
   const theme = useTheme();
   const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
@@ -82,13 +42,16 @@ const Results = (props: Props) => {
         paddingBottom: notLarge ? "20vh" : "null",
       }}
     >
+      <Grid item>
+        <InteractiveMap />
+      </Grid>
       <Typography
         sx={{
           height: "auto",
           width: "100%",
         }}
       >
-        {answer}
+        {placeSummary}
       </Typography>
     </Grid>
   );

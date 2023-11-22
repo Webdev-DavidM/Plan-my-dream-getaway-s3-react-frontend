@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 // import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 // Redux
@@ -183,9 +182,6 @@ export default function GoogleMaps() {
                     {part.text}
                   </Box>
                 ))}
-                <Typography variant="body1">
-                  {` , ${option.structured_formatting.secondary_text}`}
-                </Typography>
               </Grid>
             </li>
           );
