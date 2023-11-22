@@ -1,8 +1,8 @@
-import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import AutoCompletePlace from "./AutoCompletePlace";
 import PopularDestinations from "./PopularDestinations";
 
-function SelectPlace({ total }) {
+function SelectPlace() {
   const theme = useTheme();
   const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
   return (
@@ -15,7 +15,6 @@ function SelectPlace({ total }) {
       }}
     >
       <AutoCompletePlace />
-      <Typography sx={{ width: "100%" }}> {total}</Typography>
 
       <PopularDestinations />
     </Grid>
