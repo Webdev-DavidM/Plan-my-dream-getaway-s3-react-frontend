@@ -3,7 +3,7 @@ import InteractiveMap from "./InteractiveMap";
 import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
   getTopFivePlaceImages,
-  getTopFivePlaces,
+  // getTopFivePlaces,
 } from "../../../redux/tripDetailsSlice";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
