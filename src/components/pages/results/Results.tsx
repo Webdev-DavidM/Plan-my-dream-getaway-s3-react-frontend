@@ -3,7 +3,7 @@ import InteractiveMap from "./InteractiveMap";
 import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
   getTopFivePlaceImages,
-  // getTopFivePlaces,
+  getTopFivePlaces,
 } from "../../../redux/tripDetailsSlice";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ const Results = (props: Props) => {
     // also request the place summary here and add to the overall topFivePlacesAllData
     // this api call is commented out for now below
     // until i can host my server
-    // dispatch(getTopFivePlaces());
+    dispatch(getTopFivePlaces());
   }, [dispatch]);
 
   useEffect(() => {
