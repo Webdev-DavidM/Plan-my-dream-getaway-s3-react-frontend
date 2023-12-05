@@ -26,9 +26,12 @@ type InitialState = {
   topFivePlacesAllData: TopFivePlaces[] | [];
   // As I am waiting for the data to come back from the api call, I have split up
   // the data below so it is easier to access in the components
-  topFivePlaces: string[];
+  topFivePlaces: {
+    place: string;
+    summary: string | undefined;
+  }[];
   topFivePlacesImages: string[];
-  topFivePlacesSummary: string[];
+  topFivePlacesDescriptions: string[];
 };
 
 export const getTopFivePlaces: any = createAsyncThunk<any>(
@@ -37,14 +40,35 @@ export const getTopFivePlaces: any = createAsyncThunk<any>(
     const state: any = getState();
     const place = state.tripDetails.place;
 
-    console.log("place", place);
     try {
       const topFive = await axios.post("http://localhost:4000/topFivePlaces", {
         place: `${place}`,
       });
-      console.log("topFive", topFive);
 
       return topFive;
+    } catch {
+      console.error("err");
+    }
+  }
+);
+export const getTopFivePlaceDescriptions: any = createAsyncThunk<any>(
+  "tripDetails/getTopFivePlaceDescriptions",
+  async (placesArray: any, { dispatch, getState }) => {
+    try {
+      const topFivePlacesDescriptions = axios.post(
+        // "https://g5zdp9htoh.execute-api.eu-west-2.amazonaws.com/dev/placesPhotos",
+        "http://localhost:4000/recommendedPlaceDescription",
+        {
+          placesArray,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return topFivePlacesDescriptions;
     } catch {
       console.error("err");
     }
@@ -88,8 +112,9 @@ export const tripDetailsSlice = createSlice({
     loading: false,
     tripSummary: "",
     topFivePlaces: [],
-    topFivePlacesSummary: [],
+    topFivePlacesAllData: [],
     topFivePlacesImages: [],
+    topFivePlacesDescriptions: [],
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -232,6 +257,43 @@ export const tripDetailsSlice = createSlice({
         // }
       })
       .addCase(getTopFivePlaceImages.rejected, (state, action) => {
+        // const { requestId } = action.meta;
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.error = action.error
+        //   state.currentRequestId = undefined
+        // }
+      });
+    builder
+      .addCase(getTopFivePlaceDescriptions.pending, (state, action) => {
+        // if (state.loading === 'idle') {
+        //   state.loading = 'pending'
+        //   state.currentRequestId = action.meta.requestId
+        // }
+      })
+      .addCase(getTopFivePlaceDescriptions.fulfilled, (state, action) => {
+        console.log("top 5 descriptions", action.payload.data);
+        state.topFivePlacesDescriptions = [...action.payload.data];
+
+        // const { requestId } = action.meta;
+        // state.loading = false;
+        // state.topFivePlaces = action.payload.data;
+        // getTopFivePlaceDescriptions(action.payload.data);
+        // state.tripRecommendation = action.payload.data.message;
+
+        // if (
+        //   state.loading === 'pending' &&
+        //   state.currentRequestId === requestId
+        // ) {
+        //   state.loading = 'idle'
+        //   state.entities.push(action.payload)
+        //   state.currentRequestId = undefined
+        // }
+      })
+      .addCase(getTopFivePlaceDescriptions.rejected, (state, action) => {
         // const { requestId } = action.meta;
         // if (
         //   state.loading === 'pending' &&
