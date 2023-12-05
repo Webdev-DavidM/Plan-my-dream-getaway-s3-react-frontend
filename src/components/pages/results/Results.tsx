@@ -10,6 +10,7 @@ import {
 import InteractiveMap from "./InteractiveMap";
 import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
+  getTopFivePlaceDescriptions,
   getTopFivePlaceImages,
   getTopFivePlaces,
 } from "../../../redux/tripDetailsSlice";
@@ -48,6 +49,9 @@ const Results = (props: any) => {
   const topFivePlacesImages = useSelector(
     (state: any) => state.tripDetails.topFivePlacesImages
   );
+  const topFivePlacesDescriptions = useSelector(
+    (state: any) => state.tripDetails.topFivePlacesDescriptions
+  );
 
   useEffect(() => {
     dispatch(getTopFivePlaces());
@@ -56,7 +60,7 @@ const Results = (props: any) => {
   useEffect(() => {
     if (topFivePlaces.length > 0) {
       const places = topFivePlaces.map((place: any) => place.place);
-
+      dispatch(getTopFivePlaceDescriptions(places));
       dispatch(getTopFivePlaceImages(places));
     }
   }, [topFivePlaces, dispatch]);
@@ -126,8 +130,11 @@ const Results = (props: any) => {
           {topFivePlaces?.map((place: any, index: number) => (
             <TabPanel value={value} index={index}>
               <PlaceDetails
-                place={place.place}
+                place={place}
                 image={topFivePlacesImages[index]?.photoRef || undefined}
+                description={
+                  topFivePlacesDescriptions[index]?.summary || undefined
+                }
               />
             </TabPanel>
           ))}

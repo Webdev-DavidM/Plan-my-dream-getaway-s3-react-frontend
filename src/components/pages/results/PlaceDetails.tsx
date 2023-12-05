@@ -1,11 +1,12 @@
 import { Box, Card, CardContent, Skeleton, Typography } from "@mui/material";
 
 type Props = {
-  place: string;
+  place: any;
   image: string | undefined;
+  description: string | undefined;
 };
 
-function PlaceDetails({ place, image }: Props) {
+function PlaceDetails({ place, image, description }: Props) {
   return (
     <Card
       sx={{
@@ -39,12 +40,15 @@ function PlaceDetails({ place, image }: Props) {
       </Box>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {place}
+          {place.place}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
+        {description ? (
+          <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography>
+        ) : (
+          <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
+        )}
       </CardContent>
     </Card>
   );
