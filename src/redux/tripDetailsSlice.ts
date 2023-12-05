@@ -2,15 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-type PlaceImages = {
+type PlaceImage = {
   place: string;
   imageUrl: string[];
 };
 
 type TopFivePlaces = {
-  place?: string;
-  summary?: string;
-  image?: PlaceImages;
+  place: string | undefined;
+  summary: string | undefined;
+  image: PlaceImage | undefined;
 };
 
 type InitialState = {
@@ -22,11 +22,13 @@ type InitialState = {
   errorMessage: string | undefined;
   loading: boolean;
   tripSummary: string;
+  // This is used if the data is got from the server as all the data will load at the same time
   topFivePlacesAllData: TopFivePlaces[] | [];
   // As I am waiting for the data to come back from the api call, I have split up
   // the data below so it is easier to access in the components
   topFivePlaces: string[];
-  topFivePlacesSummary: [];
+  topFivePlacesImages: string[];
+  topFivePlacesSummary: string[];
 };
 
 export const getTopFivePlaces: any = createAsyncThunk<any>(
@@ -55,7 +57,8 @@ export const getTopFivePlaceImages: any = createAsyncThunk<any>(
     console.log("placesArray", placesArray);
     try {
       const topFiveImages = axios.post(
-        "https://g5zdp9htoh.execute-api.eu-west-2.amazonaws.com/dev/placesPhotos",
+        // "https://g5zdp9htoh.execute-api.eu-west-2.amazonaws.com/dev/placesPhotos",
+        "http://localhost:3000/dev/placesPhotos",
         {
           places: placesArray,
         },
@@ -86,6 +89,7 @@ export const tripDetailsSlice = createSlice({
     tripSummary: "",
     topFivePlaces: [],
     topFivePlacesSummary: [],
+    topFivePlacesImages: [],
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -210,8 +214,8 @@ export const tripDetailsSlice = createSlice({
         // }
       })
       .addCase(getTopFivePlaceImages.fulfilled, (state, action) => {
-        console.log("top 5 images", action.payload.data);
-        state.topFivePlacesAllData = action.payload.data.message;
+        console.log("top 5 images", action.payload.data.message);
+        state.topFivePlacesImages = [...action.payload.data.message];
         // const { requestId } = action.meta;
         // state.loading = false;
         // state.topFivePlaces = action.payload.data;

@@ -25,7 +25,7 @@ export default function Header() {
       }}
     >
       <Typography
-        variant="h3"
+        variant="h5"
         color="primary"
         sx={{
           width: "100%",
@@ -41,6 +41,7 @@ export default function Header() {
           width: "100%",
           textAlign: "center",
           mb: 1,
+          fontSize: ".9rem",
         }}
       >
         {" "}
