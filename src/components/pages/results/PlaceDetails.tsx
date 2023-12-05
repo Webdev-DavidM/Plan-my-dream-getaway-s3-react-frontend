@@ -29,7 +29,12 @@ function PlaceDetails({ place, image }: Props) {
             src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&maxheight=1200&photoreference=${image}&key=AIzaSyAIVMegIRRT5fdmdOP6H5FlAGDG32gMGtU`}
           />
         ) : (
-          <Skeleton />
+          <Skeleton
+            variant="rectangular"
+            width={"100%"}
+            height={400}
+            animation="wave"
+          />
         )}
       </Box>
       <CardContent>
