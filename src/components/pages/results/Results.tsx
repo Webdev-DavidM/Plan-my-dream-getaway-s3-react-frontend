@@ -1,18 +1,11 @@
-import {
-  Box,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import InteractiveMap from "./InteractiveMap";
 import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
   getTopFivePlaceDescriptions,
   getTopFivePlaceImages,
   getTopFivePlaces,
+  setChosenMapPlace,
 } from "../../../redux/tripDetailsSlice";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,15 +26,7 @@ function TabPanel({ children, value, index, ...other }: any) {
   );
 }
 
-// function a11yProps(index: number) {
-//   return {
-//     id: `simple-tab-${index}`,
-//     "aria-controls": `simple-tabpanel-${index}`,
-//   };
-// }
-
 const Results = (props: any) => {
-  const { placeSummary } = useStreamPlaceSummary();
   const dispatch = useDispatch();
   const topFivePlaces = useSelector(
     (state: any) => state.tripDetails.topFivePlaces
@@ -68,86 +53,71 @@ const Results = (props: any) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    dispatch(setChosenMapPlace(topFivePlaces[newValue]));
     setValue(newValue);
   };
 
+  useEffect(() => {
+    if (topFivePlacesImages.length > 0)
+      dispatch(setChosenMapPlace(topFivePlaces[0]));
+  }, [topFivePlacesImages, dispatch]);
+
   const theme = useTheme();
-  const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <Grid
       container
       justifyContent={"space-evenly"}
       sx={{
-        paddingTop: notLarge ? "40vh" : "20vh",
-        paddingBottom: notLarge ? "20vh" : "null",
         maxWidth: "1500px",
-        height: "2000px",
       }}
     >
       <Grid
         item
         xs={6}
         sx={{
-          border: `${theme.palette.primary.main} 1px solid`,
+          border: `1px solid ${theme.palette.primary.main} `,
           borderRadius: "10px",
           padding: "2rem",
+          height: "95vh",
+          overflowY: "scroll",
         }}
       >
-        <Typography
-          sx={{
-            height: "auto",
-            width: "100%",
-          }}
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          scrollButtons="auto"
+          variant="fullWidth"
         >
-          {placeSummary}
-        </Typography>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            border: `${theme.palette.primary.main} 1px solid`,
-            borderRadius: "10px",
-            overflow: "hidden",
-            mt: 2,
-          }}
-        >
-          {" "}
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            centered
-            scrollButtons="auto"
-            variant="fullWidth"
-          >
-            {topFivePlaces?.map((place: any, index: number) => (
-              <Tab
-                key={index}
-                label={place.place}
-                onClick={() => setValue(index)}
-              />
-            ))}
-          </Tabs>
           {topFivePlaces?.map((place: any, index: number) => (
-            <TabPanel value={value} index={index}>
-              <PlaceDetails
-                place={place}
-                image={topFivePlacesImages[index]?.photoRef || undefined}
-                description={
-                  topFivePlacesDescriptions[index]?.summary || undefined
-                }
-              />
-            </TabPanel>
+            <Tab
+              key={index}
+              label={place.place}
+              onClick={() => setValue(index)}
+            />
           ))}
-          <Grid item xs={12} m={2}></Grid>
-        </Grid>
+        </Tabs>
+        {topFivePlaces?.map((place: any, index: number) => (
+          <TabPanel value={value} index={index}>
+            <PlaceDetails
+              place={place}
+              image={topFivePlacesImages[index]?.photoRef || undefined}
+              description={
+                topFivePlacesDescriptions[index]?.summary || undefined
+              }
+            />
+          </TabPanel>
+        ))}
       </Grid>
       <Grid
         item
         xs={4}
         sx={{
-          border: `${theme.palette.primary.main} 1px solid`,
+          border: `1px solid ${theme.palette.primary.main} `,
           borderRadius: "10px",
           padding: "2rem",
+          height: "500px",
         }}
       >
         <InteractiveMap />
