@@ -1,6 +1,5 @@
-import { Box, Grid, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid, Tab, Tabs, useTheme } from "@mui/material";
 import InteractiveMap from "./InteractiveMap";
-import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
   getTopFivePlaceDescriptions,
   getTopFivePlaceImages,
@@ -60,7 +59,7 @@ const Results = (props: any) => {
   useEffect(() => {
     if (topFivePlacesImages.length > 0)
       dispatch(setChosenMapPlace(topFivePlaces[0]));
-  }, [topFivePlacesImages, dispatch]);
+  }, [topFivePlacesImages, dispatch, topFivePlaces]);
 
   const theme = useTheme();
 

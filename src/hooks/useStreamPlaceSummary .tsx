@@ -4,10 +4,6 @@ import { setLoading, setTripSummary } from "../redux/tripDetailsSlice";
 import { AppDispatch } from "../redux/store";
 
 const useStreamPlaceSummary = () => {
-  // const interests = useSelector((state: any) => state.tripDetails.interests);
-  // const travellers = useSelector(
-  //   (state: any) => state.tripDetails.travellingWith
-  // );
   const tripSummary = useSelector(
     (state: any) => state.tripDetails.tripSummary
   );
