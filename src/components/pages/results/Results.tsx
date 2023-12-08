@@ -78,76 +78,53 @@ const Results = (props: any) => {
       container
       justifyContent={"space-evenly"}
       sx={{
-        paddingTop: notLarge ? "40vh" : "20vh",
-        paddingBottom: notLarge ? "20vh" : "null",
         maxWidth: "1500px",
-        height: "2000px",
       }}
     >
       <Grid
         item
         xs={6}
         sx={{
-          border: `${theme.palette.primary.main} 1px solid`,
+          border: `1px solid ${theme.palette.primary.main} `,
           borderRadius: "10px",
           padding: "2rem",
         }}
       >
-        <Typography
-          sx={{
-            height: "auto",
-            width: "100%",
-          }}
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          scrollButtons="auto"
+          variant="fullWidth"
         >
-          {placeSummary}
-        </Typography>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            border: `${theme.palette.primary.main} 1px solid`,
-            borderRadius: "10px",
-            overflow: "hidden",
-            mt: 2,
-          }}
-        >
-          {" "}
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            centered
-            scrollButtons="auto"
-            variant="fullWidth"
-          >
-            {topFivePlaces?.map((place: any, index: number) => (
-              <Tab
-                key={index}
-                label={place.place}
-                onClick={() => setValue(index)}
-              />
-            ))}
-          </Tabs>
           {topFivePlaces?.map((place: any, index: number) => (
-            <TabPanel value={value} index={index}>
-              <PlaceDetails
-                place={place}
-                image={topFivePlacesImages[index]?.photoRef || undefined}
-                description={
-                  topFivePlacesDescriptions[index]?.summary || undefined
-                }
-              />
-            </TabPanel>
+            <Tab
+              key={index}
+              label={place.place}
+              onClick={() => setValue(index)}
+            />
           ))}
-          <Grid item xs={12} m={2}></Grid>
-        </Grid>
+        </Tabs>
+        {topFivePlaces?.map((place: any, index: number) => (
+          <TabPanel value={value} index={index}>
+            <PlaceDetails
+              place={place}
+              image={topFivePlacesImages[index]?.photoRef || undefined}
+              description={
+                topFivePlacesDescriptions[index]?.summary || undefined
+              }
+            />
+          </TabPanel>
+        ))}
       </Grid>
       <Grid
         item
         xs={4}
         sx={{
-          border: `${theme.palette.primary.main} 1px solid`,
+          border: `1px solid ${theme.palette.primary.main} `,
           borderRadius: "10px",
           padding: "2rem",
+          height: "500px",
         }}
       >
         <InteractiveMap />

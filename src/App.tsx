@@ -52,15 +52,14 @@ function App() {
         backgroundColor: "white",
       }}
     >
-      <Header />
+      {step !== 4 && <Header />}
       <PageContainer>
         {step === 1 && <SelectPlace />}
         {step === 2 && <Selectinterests />}
         {step === 3 && <SelectTravellers />}
         {step === 4 && <Results />}
       </PageContainer>
-
-      <BottomNavBar />
+      {step !== 4 && <BottomNavBar />}
       <Modal open={loading}>
         <Box
           sx={{
