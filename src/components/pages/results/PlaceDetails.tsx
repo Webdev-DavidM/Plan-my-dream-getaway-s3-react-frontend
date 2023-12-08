@@ -19,7 +19,8 @@ function PlaceDetails({ place, image, description }: Props) {
     <Card
       sx={{
         m: 2,
-        border: `1px solid ${theme.palette.primary.main}`,
+        border: `1px solid ${theme.palette.primary.main} `,
+        boxShadow: null,
       }}
     >
       <Box
@@ -30,6 +31,7 @@ function PlaceDetails({ place, image, description }: Props) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+
           mt: 3,
         }}
       >

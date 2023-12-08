@@ -88,6 +88,8 @@ const Results = (props: any) => {
           border: `1px solid ${theme.palette.primary.main} `,
           borderRadius: "10px",
           padding: "2rem",
+          height: "95vh",
+          overflowY: "scroll",
         }}
       >
         <Tabs
