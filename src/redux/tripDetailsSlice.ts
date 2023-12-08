@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { type } from "os";
 
 type PlaceImage = {
   place: string;
@@ -11,6 +12,17 @@ type TopFivePlaces = {
   place: string | undefined;
   summary: string | undefined;
   image: PlaceImage | undefined;
+};
+
+type Position = {
+  lat: number;
+  lng: number;
+};
+
+type TopFivePlacesImages = {
+  place: string;
+  image: string[];
+  position: Position;
 };
 
 type InitialState = {
@@ -30,8 +42,9 @@ type InitialState = {
     place: string;
     summary: string | undefined;
   }[];
-  topFivePlacesImages: string[];
+  topFivePlacesImages: TopFivePlacesImages[];
   topFivePlacesDescriptions: string[];
+  chosenMapPlace: Position | undefined;
 };
 
 export const getTopFivePlaces: any = createAsyncThunk<any>(
@@ -115,6 +128,7 @@ export const tripDetailsSlice = createSlice({
     topFivePlacesAllData: [],
     topFivePlacesImages: [],
     topFivePlacesDescriptions: [],
+    chosenMapPlace: undefined,
   } as InitialState,
   reducers: {
     setSearchStep: (state, { payload }: PayloadAction<number>) => {
@@ -184,6 +198,13 @@ export const tripDetailsSlice = createSlice({
     setTripSummary: (state, { payload }: PayloadAction<string>) => {
       state.tripSummary = payload;
     },
+    setChosenMapPlace: (state, { payload }: PayloadAction<any>) => {
+      const position = state.topFivePlacesImages.find(
+        (image) => image.place === payload.place
+      )?.position;
+
+      state.chosenMapPlace = position;
+    },
   },
   extraReducers: (builder) => {
     // getTopFivePlaces
@@ -199,7 +220,6 @@ export const tripDetailsSlice = createSlice({
         // const { requestId } = action.meta;
         // state.loading = false;
 
-        console.log("top 5 places", action.payload.data);
         const updatedArray = action.payload.data.map((place: any) => {
           return {
             place: place,
@@ -275,7 +295,6 @@ export const tripDetailsSlice = createSlice({
         // }
       })
       .addCase(getTopFivePlaceDescriptions.fulfilled, (state, action) => {
-        console.log("top 5 descriptions", action.payload.data);
         state.topFivePlacesDescriptions = [...action.payload.data];
 
         // const { requestId } = action.meta;
@@ -315,6 +334,7 @@ export const {
   setSelectTravellingWith,
   setLoading,
   setTripSummary,
+  setChosenMapPlace,
 } = tripDetailsSlice.actions;
 
 export default tripDetailsSlice.reducer;

@@ -1,18 +1,11 @@
-import {
-  Box,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import InteractiveMap from "./InteractiveMap";
 import useStreamPlaceSummary from "../../../hooks/useStreamPlaceSummary ";
 import {
   getTopFivePlaceDescriptions,
   getTopFivePlaceImages,
   getTopFivePlaces,
+  setChosenMapPlace,
 } from "../../../redux/tripDetailsSlice";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,15 +26,7 @@ function TabPanel({ children, value, index, ...other }: any) {
   );
 }
 
-// function a11yProps(index: number) {
-//   return {
-//     id: `simple-tab-${index}`,
-//     "aria-controls": `simple-tabpanel-${index}`,
-//   };
-// }
-
 const Results = (props: any) => {
-  const { placeSummary } = useStreamPlaceSummary();
   const dispatch = useDispatch();
   const topFivePlaces = useSelector(
     (state: any) => state.tripDetails.topFivePlaces
@@ -68,11 +53,17 @@ const Results = (props: any) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    dispatch(setChosenMapPlace(topFivePlaces[newValue]));
     setValue(newValue);
   };
 
+  useEffect(() => {
+    if (topFivePlacesImages.length > 0)
+      dispatch(setChosenMapPlace(topFivePlaces[0]));
+  }, [topFivePlacesImages, dispatch]);
+
   const theme = useTheme();
-  const notLarge = useMediaQuery(theme.breakpoints.down("lg"));
+
   return (
     <Grid
       container

@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
+import { useAppSelector } from "../../../hooks/hooks";
 
-type Props = {};
+const InteractiveMap = () => {
+  let position = useAppSelector((state) => state.tripDetails.chosenMapPlace);
 
-const InteractiveMap = (props: Props) => {
-  // Initialize and add the map
-  let map;
-  async function initMap(): Promise<void> {
-    // The location of Uluru
-    const position = { lat: -25.344, lng: 131.031 };
-
-    // Request needed libraries.
+  const initMap = useCallback(async () => {
     //@ts-ignore
     const { Map } = (await google.maps.importLibrary("maps")) as any;
     //@ts-ignore
@@ -18,23 +13,16 @@ const InteractiveMap = (props: Props) => {
     )) as any;
 
     // The map, centered at Uluru
-    map = new Map(document.getElementById("map") as HTMLElement, {
-      zoom: 4,
+    new Map(document.getElementById("map") as HTMLElement, {
+      zoom: 12,
       center: position,
       mapId: "DEMO_MAP_ID",
     });
-
-    // The marker, positioned at Uluru
-    const marker = new AdvancedMarkerElement({
-      map: map,
-      position: position,
-      title: "Uluru",
-    });
-  }
+  }, [position]);
 
   useEffect(() => {
-    initMap();
-  }, []);
+    if (position) initMap();
+  }, [position, initMap]);
 
   return (
     <div
