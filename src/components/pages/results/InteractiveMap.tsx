@@ -19,7 +19,7 @@ const InteractiveMap = () => {
     if (window?.map?.panTo) return;
     // The map, centered at Uluru
     const map = new Map(document.getElementById("map") as HTMLElement, {
-      zoom: 10,
+      zoom: 14,
       center: position,
       mapId: "DEMO_MAP_ID",
     });
@@ -39,17 +39,31 @@ const InteractiveMap = () => {
   }, [coOrdinates, position]);
 
   // If position is changed we will scroll to the new position on the map
+
+  const addMarker = useCallback(async () => {
+    const google = await (window as any).google;
+    // @ts-ignore
+    const map = window.map;
+
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
+      "marker"
+    )) as any;
+
+    new AdvancedMarkerElement({
+      map: map,
+      position,
+    });
+  }, [position]);
+
   useEffect(() => {
     // @ts-ignore
-    if (window?.map?.panTo && position) {
+    const map = window.map;
+    if (map?.panTo && map.zoom && position) {
       // @ts-ignore
-      window.map.panTo(position);
-      // @ts-ignore
-      // window.map.Marker({
-      //   position,
-      // });
+      map.panTo(position);
+      addMarker();
     }
-  }, [position]);
+  }, [position, addMarker]);
 
   useEffect(() => {
     if (coOrdinates) initMap();
