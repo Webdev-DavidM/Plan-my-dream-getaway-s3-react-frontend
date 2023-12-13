@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setTripSummary } from "../redux/tripDetailsSlice";
 import { AppDispatch } from "../redux/store";
+import getCurrentEnvURL from "../helpers/getCurrentEnv";
 
 const useStreamPlaceSummary = () => {
   const tripSummary = useSelector(
@@ -17,8 +18,9 @@ const useStreamPlaceSummary = () => {
   const getStreamPlaceSummary = useCallback(async () => {
     try {
       dispatch(setLoading(true));
+      const url = getCurrentEnvURL();
 
-      const response = await fetch("http://localhost:4000/placeSummary", {
+      const response = await fetch(`${url}/placeSummary`, {
         method: "post",
         headers: {
           Accept: "application/json, text/plain, */*",
