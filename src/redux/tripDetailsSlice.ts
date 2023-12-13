@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import getCurrentEnvURL from "../helpers/getCurrentEnv";
 
 type PlaceImage = {
   place: string;
@@ -46,6 +47,8 @@ type InitialState = {
   chosenMapPlace: Position | undefined;
 };
 
+const url = getCurrentEnvURL();
+
 export const getTopFivePlaces: any = createAsyncThunk<any>(
   "tripDetails/topFivePlaces",
   async (data: any, { dispatch, getState }) => {
@@ -53,7 +56,7 @@ export const getTopFivePlaces: any = createAsyncThunk<any>(
     const place = state.tripDetails.place;
 
     try {
-      const topFive = await axios.post("http://localhost:4000/topFivePlaces", {
+      const topFive = await axios.post(`${url}/topFivePlaces`, {
         place: `${place}`,
       });
 
@@ -68,8 +71,7 @@ export const getTopFivePlaceDescriptions: any = createAsyncThunk<any>(
   async (placesArray: any, { dispatch, getState }) => {
     try {
       const topFivePlacesDescriptions = axios.post(
-        // "https://g5zdp9htoh.execute-api.eu-west-2.amazonaws.com/dev/placesPhotos",
-        "http://localhost:4000/recommendedPlaceDescription",
+        `${url}/recommendedPlaceDescription`,
         {
           placesArray,
         },
@@ -90,11 +92,12 @@ export const getTopFivePlaceDescriptions: any = createAsyncThunk<any>(
 export const getTopFivePlaceImages: any = createAsyncThunk<any>(
   "tripDetails/topFivePlaceImages",
   async (placesArray: any, { dispatch, getState }) => {
-    console.log("placesArray", placesArray);
+    // EC2 set to false as this api needs to go to lambda not EC2
+    const url = getCurrentEnvURL(false);
+    console.log("url for lambda", url);
     try {
       const topFiveImages = axios.post(
-        // "https://g5zdp9htoh.execute-api.eu-west-2.amazonaws.com/dev/placesPhotos",
-        "http://localhost:3000/dev/placesPhotos",
+        `${url}/placesPhotos`,
         {
           places: placesArray,
         },
