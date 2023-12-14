@@ -92,9 +92,6 @@ export const getTopFivePlaceDescriptions: any = createAsyncThunk<any>(
 export const getTopFivePlaceImages: any = createAsyncThunk<any>(
   "tripDetails/topFivePlaceImages",
   async (placesArray: any, { dispatch, getState }) => {
-    // EC2 set to false as this api needs to go to lambda not EC2
-    const url = getCurrentEnvURL(false);
-    console.log("url for lambda", url);
     try {
       const topFiveImages = axios.post(
         `${url}/placesPhotos`,
