@@ -30,8 +30,6 @@ function App() {
 
   const [count, setCount] = useState(0);
 
-  getCurrentEnv();
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       // Increment count every second
