@@ -14,7 +14,6 @@ import Results from "./components/pages/results/Results";
 
 // Mui
 import { Box, Grid, Modal, CircularProgress, Typography } from "@mui/material";
-import getCurrentEnv from "./helpers/getCurrentEnv";
 
 const loadingMessages = [
   "We're loading your trip for you...",
