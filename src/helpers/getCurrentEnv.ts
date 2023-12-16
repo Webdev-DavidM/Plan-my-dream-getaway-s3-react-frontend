@@ -4,8 +4,8 @@ const appUrls = {
 };
 
 const apiBaseUrls = {
-  dev: "https://nmcshhyqq0.execute-api.eu-west-2.amazonaws.com/dev",
-  prod: "https://nmcshhyqq0.execute-api.eu-west-2.amazonaws.com/dev",
+  dev: "https://api-dev.planmydreamgetaway.co.uk/topFivePlaces",
+  prod: "https://api-dev.planmydreamgetaway.co.uk/topFivePlaces",
   local: "http://localhost:3000/dev",
 };
 
