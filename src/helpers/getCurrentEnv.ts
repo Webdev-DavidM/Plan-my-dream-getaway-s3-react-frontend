@@ -6,7 +6,7 @@ const appUrls = {
 const apiBaseUrls = {
   dev: "https://api-dev.planmydreamgetaway.co.uk",
   prod: "https://api-dev.planmydreamgetaway.co.uk",
-  local: "http://localhost:3000/dev",
+  local: "http://localhost:3000",
 };
 
 // I have some of my backend hosted on AWS lambda and some hosted on a EC2, the reason being is openAi can take more than 30 seconds to respond and lambda has a 30 second timeout.

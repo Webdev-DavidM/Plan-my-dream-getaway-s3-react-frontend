@@ -39,7 +39,7 @@ function PlaceDetails({ place, image, description }: Props) {
           <img
             style={{ objectFit: "cover", width: "auto", height: "100%" }}
             alt="place"
-            src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&maxheight=1200&photoreference=${image}&key=AIzaSyAIVMegIRRT5fdmdOP6H5FlAGDG32gMGtU`}
+            src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&maxheight=1200&photoreference=${image}&key=AIzaSyAE56AjIIaZlI42hfVTchxYiYo09LUW7As`}
           />
         ) : (
           <Skeleton
