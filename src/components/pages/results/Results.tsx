@@ -39,7 +39,8 @@ const Results = (props: any) => {
 
   useEffect(() => {
     dispatch(getTopFivePlaces());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (topFivePlaces.length > 0) {
