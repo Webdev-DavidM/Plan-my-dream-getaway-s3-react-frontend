@@ -1,5 +1,4 @@
 import { Box, Grid, Tab, Tabs, useTheme } from "@mui/material";
-import InteractiveMap from "./InteractiveMap";
 import {
   getTopFivePlaceDescriptions,
   getTopFivePlaces,
