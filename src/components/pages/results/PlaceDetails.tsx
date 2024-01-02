@@ -23,7 +23,8 @@ function PlaceDetails({ place, image, description }: Props) {
         boxShadow: null,
       }}
     >
-      <Box
+      {/* commented out for now google places api too expensive */}
+      {/* <Box
         sx={{
           height: "250px",
           width: "100%",
@@ -49,7 +50,7 @@ function PlaceDetails({ place, image, description }: Props) {
             animation="wave"
           />
         )}
-      </Box>
+      </Box> */}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {place.place}
