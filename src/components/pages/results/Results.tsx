@@ -2,7 +2,6 @@ import { Box, Grid, Tab, Tabs, useTheme } from "@mui/material";
 import InteractiveMap from "./InteractiveMap";
 import {
   getTopFivePlaceDescriptions,
-  getTopFivePlaceImages,
   getTopFivePlaces,
   setChosenMapPlace,
 } from "../../../redux/tripDetailsSlice";
@@ -46,7 +45,8 @@ const Results = (props: any) => {
     if (topFivePlaces.length > 0) {
       const places = topFivePlaces.map((place: any) => place.place);
       dispatch(getTopFivePlaceDescriptions(places));
-      dispatch(getTopFivePlaceImages(places));
+      // google api too expensive for now commented out
+      // dispatch(getTopFivePlaceImages(places));
     }
   }, [topFivePlaces, dispatch]);
 
@@ -110,7 +110,8 @@ const Results = (props: any) => {
           </TabPanel>
         ))}
       </Grid>
-      <Grid
+      {/* commented out for now google places api too expensive */}
+      {/* <Grid
         item
         xs={4}
         sx={{
@@ -121,7 +122,7 @@ const Results = (props: any) => {
         }}
       >
         <InteractiveMap />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };
